@@ -1,0 +1,28 @@
+- non va controllo slot vuoti
+- immagine anteprima non si vede quando modifichi
+- controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
+- SERVE COPIA PROFONDA O QT FA DA SOLO? Vedi Json::modificaOggetto(Biblioteca* oggetto)
+- NON SI AGGIORNA INTERFACCIA ADMIN E USER IN CONTEMPORANEA
+- NON VA FILTRO LINGUE DA SOLO
+- controlla dynamic_cast ad esempio su Json.cpp (si può fare con static_cast ? --> vedi anche Mazzaretto)
+- va messo il const nei metodi di userpage e adminpage ?
+- guarda bene polimorfismo
+- colonne e righe vanno messe in maniera statica?
+- lasciamo questo layout con questa finestra o facciamo dinamico?
+
+- CONTROLLA METODI CLASSE JSON, molte ripetizioni e modifiche del tipo:
+if (file.write(QJsonDocument(jsonArray).toJson()) != -1) {
+        file.close();
+        notificaObservers(); // Notifica gli observer dopo l'aggiornamento
+        return true;
+    }
+    file.close();
+    return false;
+
+[] mantenuto metodo showAll() per non effetturare check inutili --> ha senso (?)
+
+
+
+
+appena modificato AdminPage::eliminaOggetto(...) 11:15
+

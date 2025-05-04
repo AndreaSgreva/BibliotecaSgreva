@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "qmainwindow": "cpp",
+        "chrono": "cpp",
+        "format": "cpp",
+        "optional": "cpp",
+        "system_error": "cpp"
+    },
+    "git.ignoreLimitWarning": true
+}
