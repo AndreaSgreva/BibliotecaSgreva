@@ -32,7 +32,7 @@ UserPage::UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidge
     searchBar = new QLineEdit(this);
     searchBar->setPlaceholderText("Cerca per lettere...");
     searchBar->setFixedHeight(40);
-    searchBar->setMinimumWidth(750); 
+    searchBar->setMinimumWidth(720); 
 
     // Pulsante di ricerca
     QPushButton *searchButton = new QPushButton("Cerca");
