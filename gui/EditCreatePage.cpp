@@ -110,6 +110,23 @@ void EditCreatePage::setupCommonFields() {
     imageLayout->addWidget(browseImageButton);
     formLayout->addRow("Immagine:", imageLayout);
 
+    // PROVA PREVIEW IMMAGINE
+    imagePreview = new QLabel();
+    imagePreview->setFixedSize(200, 200);
+    imagePreview->setAlignment(Qt::AlignCenter);
+    imagePreview->setStyleSheet("border: 1px solid #ccc;");
+
+    if (currentItem && !QString::fromStdString(currentItem->getImmagine()).isEmpty()) {
+        QPixmap pixmap(QString::fromStdString(currentItem->getImmagine()));
+        if (!pixmap.isNull()) {
+            imagePreview->setPixmap(pixmap.scaled(imagePreview->size(), Qt::KeepAspectRatio));
+        } else {
+            imagePreview->setText("Immagine non valida");
+        }
+    } else {
+        imagePreview->setText("Nessuna immagine selezionata");
+    }
+
     titleEdit = new QLineEdit(currentItem ? QString::fromStdString(currentItem->getTitolo()) : "");
     yearEdit = new QSpinBox();
     yearEdit->setRange(1900, QDate::currentDate().year());
@@ -137,11 +154,6 @@ void EditCreatePage::setupCommonFields() {
     //loansEdit->setRange(0, copiesEdit->value());
     loansEdit->setValue(currentItem ? currentItem->getNumeroPrestiti() : 0);
     
-    // PROVA PREVIEW IMMAGINE
-    imagePreview = new QLabel();
-    imagePreview->setFixedSize(200, 200);
-    imagePreview->setAlignment(Qt::AlignCenter);
-    imagePreview->setStyleSheet("border: 1px solid #ccc;");
 
     // Aggiorna la preview quando si seleziona un'immagine
     connect(imagePathEdit, &QLineEdit::textChanged, this, [this](const QString& path) {
