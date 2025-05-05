@@ -1,7 +1,6 @@
-- immagine anteprima non si vede quando modifichi
+- NON VA FILTRO LINGUE DA SOLO
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
 - SERVE COPIA PROFONDA O QT FA DA SOLO? Vedi Json::modificaOggetto(Biblioteca* oggetto)
-- NON VA FILTRO LINGUE DA SOLO
 - VA FATTO UN CREATE E MODIFICA PER OGNI OGGETTO E POI GESTITO CON POLIMORFISMO?
 - controlla dynamic_cast ad esempio su Json.cpp (si può fare con static_cast ? --> vedi anche Mazzaretto)
 - va messo il const nei metodi di userpage e adminpage ?

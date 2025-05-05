@@ -31,7 +31,7 @@ private:
     QScrollArea *scrollArea;    //Area di scorrimento
 
     // Radio button per categorie
-    QRadioButton *allRadioButton;
+    QRadioButton *allCategoryRadioButton;
     QRadioButton *libroRadioButton;
     QRadioButton *vinileRadioButton;
     QRadioButton *filmRadioButton;

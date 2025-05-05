@@ -146,7 +146,7 @@ void AdminPage::filter() {
     categoryLabel->setStyleSheet("font-weight: bold;");
 
     // Creazione dei radio button per categoria
-    allRadioButton = new QRadioButton("Tutte le categorie", dialog);
+    allCategoryRadioButton = new QRadioButton("Tutte le categorie", dialog);
     libroRadioButton = new QRadioButton("Libro", dialog);
     vinileRadioButton = new QRadioButton("Vinile", dialog);
     filmRadioButton = new QRadioButton("Film", dialog);
@@ -164,7 +164,7 @@ void AdminPage::filter() {
     // Raggruppiamo i radio button in un QButtonGroup per forzare la selezione unica
     // Gruppo categoria
     QButtonGroup *categoryGroup = new QButtonGroup(dialog);
-    categoryGroup->addButton(allRadioButton);
+    categoryGroup->addButton(allCategoryRadioButton);
     categoryGroup->addButton(libroRadioButton);
     categoryGroup->addButton(vinileRadioButton);
     categoryGroup->addButton(filmRadioButton);
@@ -177,7 +177,7 @@ void AdminPage::filter() {
     linguaGroup->addButton(spagnoloRadioButton);
     
     // Selezione predefinita: mostra tutto
-    allRadioButton->setChecked(true);
+    allCategoryRadioButton->setChecked(true);
     allLinguaRadioButton->setChecked(true);
 
     QPushButton *applyButton = new QPushButton("Applica", dialog);
@@ -185,7 +185,7 @@ void AdminPage::filter() {
 
     // Aggiunta dei radio button al layout
     dialogLayout->addWidget(categoryLabel);
-    dialogLayout->addWidget(allRadioButton);
+    dialogLayout->addWidget(allCategoryRadioButton);
     dialogLayout->addWidget(libroRadioButton);
     dialogLayout->addWidget(vinileRadioButton);
     dialogLayout->addWidget(filmRadioButton);
@@ -200,7 +200,7 @@ void AdminPage::filter() {
         cleanLayout();
 
         // Mostriamo gli elementi in base alla selezione
-        if (allRadioButton->isChecked()) showAll();
+        if (allCategoryRadioButton->isChecked() && allLinguaRadioButton->isChecked()) showAll();
         else showOggetto();
     }
 }
@@ -311,36 +311,20 @@ void AdminPage::showOggetto() {
     else if (ingleseRadioButton->isChecked()) linguaSelezionata = "inglese";
     else if (spagnoloRadioButton->isChecked()) linguaSelezionata = "spagnolo";
 
-    // Determina la categoria selezionata
-    if (allRadioButton->isChecked()) showAll();
-    else if (libroRadioButton->isChecked()) {
-        // Mostra solo i libri
-        for (Biblioteca *obj : lista) {
-            Libro *libro = dynamic_cast<Libro*>(obj);
-            if (libro && (allLinguaRadioButton->isChecked() || libro->getLingua() == linguaSelezionata.toStdString())) {
-                riquadroOggetto(obj, row, col, maxColumns);
-            }
+   // Filtra per categoria E lingua
+   for (Biblioteca *obj : lista) {
+        bool matchesCategory = allCategoryRadioButton->isChecked() || 
+                         (libroRadioButton->isChecked() && dynamic_cast<Libro*>(obj)) ||
+                         (filmRadioButton->isChecked() && dynamic_cast<Film*>(obj)) ||
+                         (vinileRadioButton->isChecked() && dynamic_cast<Vinile*>(obj));
+
+        bool matchesLanguage = allLinguaRadioButton->isChecked() || 
+                         (QString::fromStdString(obj->getLingua()).toLower() == linguaSelezionata);
+
+        if (matchesCategory && matchesLanguage) {
+            riquadroOggetto(obj, row, col, maxColumns);
         }
     }
-    else if (filmRadioButton->isChecked()) {
-        // Mostra solo i film
-        for (Biblioteca *obj : lista) {
-            Film *film = dynamic_cast<Film*>(obj);
-            if (film && (allLinguaRadioButton->isChecked() || film->getLingua() == linguaSelezionata.toStdString())) {
-                riquadroOggetto(obj, row, col, maxColumns);
-            }
-        }
-    }
-    else if (vinileRadioButton->isChecked()) {
-        // Mostra solo i vinili
-        for (Biblioteca *obj : lista) {
-            Vinile *vinile = dynamic_cast<Vinile*>(obj);
-            if (vinile && (allLinguaRadioButton->isChecked() || vinile->getLingua() == linguaSelezionata.toStdString())) {
-                riquadroOggetto(obj, row, col, maxColumns);
-            }
-        }
-    }
-    contentLayout->setColumnStretch(maxColumns, 1);  // Mantiene la griglia bilanciata
 }
 
 // Metodo per creare i riquadri per ogni oggetto
