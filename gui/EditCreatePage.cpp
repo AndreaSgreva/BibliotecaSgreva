@@ -238,8 +238,25 @@ void EditCreatePage::saveItem() {
         return;
     }
 
+    if (currentType == "Libro") {
+        if (authorEdit->text().isEmpty() || pagesEdit->value() == 0 || isbnEdit->text().isEmpty()) {
+            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
+            return;
+        }
+    } else if (currentType == "Film") {
+        if (directorEdit->text().isEmpty() || protagonistEdit->text().isEmpty() || durationEdit->value() == 0) {
+            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
+            return;
+        }
+    } else {
+        if (artistEdit->text().isEmpty() || recordCompanyEdit->text().isEmpty() || rpmEdit->value() == 0) {
+            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
+            return;
+        }
+    }
+
     // Creazione o modifica dell'oggetto
-    if (currentMode == Create) {
+    if (currentMode == Create) {  // Modalità creazione
         Biblioteca* newItem = createNewItem();
         if (newItem) {
             emit itemCreated(newItem);

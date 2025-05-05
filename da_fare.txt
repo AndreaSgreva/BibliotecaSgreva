@@ -1,8 +1,8 @@
+GUARDA DEEPSEEK
 - non va controllo slot vuoti
 - immagine anteprima non si vede quando modifichi
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
 - SERVE COPIA PROFONDA O QT FA DA SOLO? Vedi Json::modificaOggetto(Biblioteca* oggetto)
-- NON SI AGGIORNA INTERFACCIA ADMIN E USER IN CONTEMPORANEA
 - NON VA FILTRO LINGUE DA SOLO
 - controlla dynamic_cast ad esempio su Json.cpp (si può fare con static_cast ? --> vedi anche Mazzaretto)
 - va messo il const nei metodi di userpage e adminpage ?
