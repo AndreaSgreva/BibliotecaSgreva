@@ -1,4 +1,4 @@
-- NON VA FILTRO LINGUE DA SOLO
+- CONTROLLA POLIMORFISMO SHOWOGGETTO (FILTRI,ECC,...)
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
 - SERVE COPIA PROFONDA O QT FA DA SOLO? Vedi Json::modificaOggetto(Biblioteca* oggetto)
 - VA FATTO UN CREATE E MODIFICA PER OGNI OGGETTO E POI GESTITO CON POLIMORFISMO?
