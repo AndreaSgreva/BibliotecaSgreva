@@ -10,7 +10,7 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     mainLayout = new QVBoxLayout(this);
     formLayout = new QFormLayout();
 
-    setupCommonFields(); //appena aggiunto
+    setupCommonFields(); //appena aggiunto  VEDI SE SERVE
     // PROVA
     mainLayout->addLayout(formLayout);
     
@@ -248,23 +248,6 @@ void EditCreatePage::saveItem() {
     if (loansEdit->value() > copiesEdit->value()) {
         QMessageBox::warning(this, "Errore", "Non si possono avere più prestiti che copie!");
         return;
-    }
-
-    if (currentType == "Libro") {
-        if (authorEdit->text().isEmpty() || pagesEdit->value() == 0 || isbnEdit->text().isEmpty()) {
-            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
-            return;
-        }
-    } else if (currentType == "Film") {
-        if (directorEdit->text().isEmpty() || protagonistEdit->text().isEmpty() || durationEdit->value() == 0) {
-            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
-            return;
-        }
-    } else {
-        if (artistEdit->text().isEmpty() || recordCompanyEdit->text().isEmpty() || rpmEdit->value() == 0) {
-            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
-            return;
-        }
     }
 
     // Creazione o modifica dell'oggetto

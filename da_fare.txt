@@ -1,3 +1,5 @@
+
+- se si mettono copie e prestiti uguali non diventa "non disponibile"
 - MEGLIO TYPEID O DYNAMIC_CAST (CONTROLLA JSON.CPP)
 - CONTROLLA POLIMORFISMO SHOWOGGETTO (FILTRI,ECC,...)
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)

@@ -1,3 +1,4 @@
+// File Json.h
 #ifndef JSON_H
 #define JSON_H
 
@@ -23,7 +24,6 @@ public:
     bool aggiungiOggetto(Biblioteca* oggetto); // Per aggiunta
     bool modificaOggetto(Biblioteca* oggetto); // Per modifiche
 
-    // NUOVI metodi per gli observer
     void aggiungiObserver(JsonObserver* observer);
     void rimuoviObserver(JsonObserver* observer);
 
