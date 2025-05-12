@@ -1,3 +1,4 @@
+- MEGLIO TYPEID O DYNAMIC_CAST (CONTROLLA JSON.CPP)
 - CONTROLLA POLIMORFISMO SHOWOGGETTO (FILTRI,ECC,...)
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
 - SERVE COPIA PROFONDA O QT FA DA SOLO? Vedi Json::modificaOggetto(Biblioteca* oggetto)

@@ -76,64 +76,7 @@ QList<Biblioteca*> Json::loadList(){
     }
     biblioteca = listaOggetti;
     return listaOggetti;
-    
 }
-
-// CON DEEPSEEK
-// Metodo per salvare i dati nel file JSON
-/*
-bool Json::saveList(const QList<Biblioteca*>& lista) const {
-    if (path.isEmpty()) {
-        qWarning("Nessun percorso file specificato per il salvataggio!");
-        return false;
-    }
-
-    QJsonArray jsonArray;
-    for (auto oggetto : lista) {
-        QJsonObject obj;
-        obj["immagine"] = QString::fromStdString(oggetto->getImmagine());
-        obj["titolo"] = QString::fromStdString(oggetto->getTitolo());
-        obj["anno"] = oggetto->getAnno();
-        obj["genere"] = QString::fromStdString(oggetto->getGenere());
-        obj["lingua"] = QString::fromStdString(oggetto->getLingua());
-        obj["disponibile"] = oggetto->getDisponibile();
-        obj["costo"] = oggetto->getCosto();
-        obj["numeroCopie"] = oggetto->getNumeroCopie();
-        obj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
-
-        // Dynamic cast per tipo specifico
-        if (auto libro = dynamic_cast<Libro*>(oggetto)) {
-            obj["classe"] = "libro";
-            obj["autore"] = QString::fromStdString(libro->getAutore());
-            obj["pagine"] = libro->getPagine();
-            obj["isbn"] = QString::fromStdString(libro->getISBN());
-        }
-        else if (auto film = dynamic_cast<Film*>(oggetto)) {
-            obj["classe"] = "film";
-            obj["regista"] = QString::fromStdString(film->getRegista());
-            obj["protagonisti"] = QString::fromStdString(film->getProtagonista());
-            obj["durata"] = film->getDurata();
-        }
-        else if (auto vinile = dynamic_cast<Vinile*>(oggetto)) {
-            obj["classe"] = "vinile";
-            obj["artista"] = QString::fromStdString(vinile->getArtista());
-            obj["casaDiscografica"] = QString::fromStdString(vinile->getCasaDiscografica());
-            obj["rpm"] = vinile->getRPM();
-        }
-        jsonArray.append(obj);
-    }
-
-    QFile file(path);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-        qWarning("Errore durante l'apertura del file per il salvataggio!");
-        return false;
-    }
-
-    file.write(QJsonDocument(jsonArray).toJson());
-    file.close();
-    return true;
-}
-*/
 
 // Metodo per trovare l'indice di un oggetto nel file JSON
 int Json::findIndex(Biblioteca* oggetto) const {
@@ -148,39 +91,7 @@ int Json::findIndex(Biblioteca* oggetto) const {
     }
     return -1;
 }
-/*
-int Json::findIndex(Biblioteca* oggetto) const {
-    if (!oggetto || path.isEmpty()) {
-        qWarning() << "Oggetto nullo o percorso file non valido";
-        return -1;
-    }
 
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly)) {
-        qCritical() << "Impossibile aprire il file:" << file.errorString();
-        return -1;
-    }
-
-    QJsonArray jsonArray = QJsonDocument::fromJson(file.readAll()).array();
-    file.close();
-
-    const QString titolo = QString::fromStdString(oggetto->getTitolo());
-    const int anno = oggetto->getAnno();
-    const QString lingua = QString::fromStdString(oggetto->getLingua());
-
-    for (int i = 0; i < jsonArray.size(); ++i) {
-        QJsonObject obj = jsonArray[i].toObject();
-        if (obj["titolo"].toString() == titolo &&
-            obj["anno"].toInt() == anno &&
-            obj["lingua"].toString() == lingua) {
-            return i;
-        }
-    }
-
-    qWarning() << "Oggetto non trovato:" << titolo;
-    return -1;
-}
-*/
 // Metodo per aggiornare lo stato di un oggetto nel file JSON (prenotazione/restituzione)
 bool Json::aggiornaStatoOggetto(Biblioteca* oggetto) {
     QFile file(path);
@@ -216,9 +127,6 @@ bool Json::aggiornaStatoOggetto(Biblioteca* oggetto) {
     }
     file.close();
     return false;
-    /*file.write(QJsonDocument(jsonArray).toJson());
-    file.close();
-    return true;*/
 }
 
 // Metodo per rimuovere un oggetto dal file JSON
@@ -246,33 +154,18 @@ bool Json::rimuoviOggetto(Biblioteca* oggetto) {
     }
 
     if (file.write(QJsonDocument(jsonArray).toJson()) != -1) {
-        // 1. Prima rimuovi dalla lista
         biblioteca.removeAt(index);
-        
-        // 2. Notifica gli observer PRIMA di eliminare l'oggetto
         notificaObservers();
-        
-        // 3. Ora puoi eliminare l'oggetto in sicurezza
         delete oggetto;
-        
         file.close();
         return true;
     }
     file.close();
     return false;
-    /*if (file.write(QJsonDocument(jsonArray).toJson()) != -1) {
-        biblioteca.removeAt(index);  // Rimuovi dalla lista interna
-        delete oggetto;  // Dealloca l'oggetto
-        file.close();
-        return true;
-    }
-    file.close();
-    return true;*/
 }
 
 // Metodo per aggiungere un oggetto al file JSON
 bool Json::aggiungiOggetto(Biblioteca* oggetto) {
-    //biblioteca.append(oggetto);
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
         qCritical() << "Impossibile aprire il file per l'aggiunta";
@@ -294,19 +187,22 @@ bool Json::aggiungiOggetto(Biblioteca* oggetto) {
     newObj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
 
     // Dynamic cast per tipo specifico
-    if (auto libro = dynamic_cast<Libro*>(oggetto)) {
+    if (typeid(*oggetto) == typeid(Libro)) {
+        Libro* libro = static_cast<Libro*>(oggetto);
         newObj["classe"] = "libro";
         newObj["autore"] = QString::fromStdString(libro->getAutore());
         newObj["pagine"] = libro->getPagine();
         newObj["isbn"] = QString::fromStdString(libro->getISBN());
     }
-    else if (auto film = dynamic_cast<Film*>(oggetto)) {
+    else if (typeid(*oggetto) == typeid(Film)) {
+        Film* film = static_cast<Film*>(oggetto);
         newObj["classe"] = "film";
         newObj["regista"] = QString::fromStdString(film->getRegista());
         newObj["protagonisti"] = QString::fromStdString(film->getProtagonista());
         newObj["durata"] = film->getDurata();
     }
-    else if (auto vinile = dynamic_cast<Vinile*>(oggetto)) {
+    else if (typeid(*oggetto) == typeid(Vinile)) {
+        Vinile* vinile = static_cast<Vinile*>(oggetto);
         newObj["classe"] = "vinile";
         newObj["artista"] = QString::fromStdString(vinile->getArtista());
         newObj["casaDiscografica"] = QString::fromStdString(vinile->getCasaDiscografica());
@@ -363,19 +259,22 @@ bool Json::modificaOggetto(Biblioteca* oggetto) {
     obj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
 
     // Dynamic cast per tipo specifico
-    if (auto libro = dynamic_cast<Libro*>(oggetto)) {
+    if (typeid(*oggetto) == typeid(Libro)) {
+        Libro* libro = static_cast<Libro*>(oggetto);
         obj["classe"] = "libro";
         obj["autore"] = QString::fromStdString(libro->getAutore());
         obj["pagine"] = libro->getPagine();
         obj["isbn"] = QString::fromStdString(libro->getISBN());
     }
-    else if (auto film = dynamic_cast<Film*>(oggetto)) {
+    else if (typeid(*oggetto) == typeid(Film)) {
+        Film* film = static_cast<Film*>(oggetto);
         obj["classe"] = "film";
         obj["regista"] = QString::fromStdString(film->getRegista());
         obj["protagonisti"] = QString::fromStdString(film->getProtagonista());
         obj["durata"] = film->getDurata();
     }
-    else if (auto vinile = dynamic_cast<Vinile*>(oggetto)) {
+    else if (typeid(*oggetto) == typeid(Vinile)) {
+        Vinile* vinile = static_cast<Vinile*>(oggetto);
         obj["classe"] = "vinile";
         obj["artista"] = QString::fromStdString(vinile->getArtista());
         obj["casaDiscografica"] = QString::fromStdString(vinile->getCasaDiscografica());
@@ -436,61 +335,3 @@ void Json::notificaObservers(){
         observer->onBibliotecaAggiornata(biblioteca);
     }
 }
-
-/*
-bool Json::savePrenotaRestituisci(const QList<Biblioteca*>& lista){
-    if (path.isEmpty()) {
-        qCritical("Percorso file JSON non impostato!");
-        return false;
-    }
-
-    QFile file(path);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-        qCritical("Impossibile aprire il file per il salvataggio!");
-        return false;
-    }
-
-    QJsonArray jsonArray;
-    for (const auto& oggetto : lista) {
-        if (!oggetto) continue;
-
-        QJsonObject obj;
-        obj["immagine"] = QString::fromStdString(oggetto->getImmagine());
-        obj["titolo"] = QString::fromStdString(oggetto->getTitolo());
-        obj["anno"] = oggetto->getAnno();
-        obj["genere"] = QString::fromStdString(oggetto->getGenere());
-        obj["lingua"] = QString::fromStdString(oggetto->getLingua());
-        obj["disponibile"] = oggetto->getDisponibile();
-        obj["costo"] = oggetto->getCosto();
-        obj["numeroCopie"] = oggetto->getNumeroCopie();
-        obj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
-
-        // Aggiungi campi specifici in base al tipo
-        if (auto libro = dynamic_cast<Libro*>(oggetto)) {
-            obj["classe"] = "libro";
-            obj["autore"] = QString::fromStdString(libro->getAutore());
-            obj["pagine"] = libro->getPagine();
-            obj["isbn"] = QString::fromStdString(libro->getISBN());
-        } 
-        else if (auto film = dynamic_cast<Film*>(oggetto)) {
-            obj["classe"] = "film";
-            obj["regista"] = QString::fromStdString(film->getRegista());
-            obj["protagonisti"] = QString::fromStdString(film->getProtagonista());
-            obj["durata"] = film->getDurata();
-        }
-        else if (auto vinile = dynamic_cast<Vinile*>(oggetto)) {
-            obj["classe"] = "vinile";
-            obj["artista"] = QString::fromStdString(vinile->getArtista());
-            obj["casaDiscografica"] = QString::fromStdString(vinile->getCasaDiscografica());
-            obj["rpm"] = vinile->getRPM();
-        }
-
-        jsonArray.append(obj);
-    }
-
-    file.write(QJsonDocument(jsonArray).toJson());
-    file.close();
-    qDebug("Salvataggio prenotazione/restituzione completato");
-    return true;
-}
-*/

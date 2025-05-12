@@ -15,15 +15,9 @@ public:
 
     // Carica i dati dal file JSON
     QList<Biblioteca*> loadList();
-
     // Salva i dati nel file JSON
-    //bool saveList(const QList<Biblioteca*>& lista) const;
-
-    // Aggiorna il percordo del file JSON
     void setFilePath(const QString& path);
 
-
-    // PROVA
     bool aggiornaStatoOggetto(Biblioteca* oggetto); // Per prenotazioni/restituzioni
     bool rimuoviOggetto(Biblioteca* oggetto); // Per eliminazioni
     bool aggiungiOggetto(Biblioteca* oggetto); // Per aggiunta
@@ -33,17 +27,12 @@ public:
     void aggiungiObserver(JsonObserver* observer);
     void rimuoviObserver(JsonObserver* observer);
 
-    
 private:
     QString path;
     int findIndex(Biblioteca* oggetto) const;
     QList<Biblioteca *> biblioteca;
     QList<JsonObserver*> observers;
-    //bool saveList(const QList<Biblioteca*>& lista) const;
     void notificaObservers();
-
-signals:
-    void saveCompleted(bool success);  // VEDI SE SERVE
 };
 
 #endif // JSON_H
