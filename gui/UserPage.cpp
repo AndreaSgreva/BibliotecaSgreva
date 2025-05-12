@@ -114,7 +114,6 @@ void UserPage::search() {
     if (!found) {
         QMessageBox::information(this, "Nessun risultato", "Nessun oggetto trovato con il titolo inserito.");
     }
-    contentLayout->setColumnStretch(maxColumns, 1);
 }
 
 // Metodo per i filtri
@@ -323,6 +322,7 @@ void UserPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColum
 
     // Imposta una dimensione fissa per i riquadri
     frame->setMinimumSize(335, 415);  // Larghezza e altezza minime
+    frame->setMaximumSize(365, 445);  // Larghezza e altezza massime
     frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     QVBoxLayout *frameLayout = new QVBoxLayout(frame);

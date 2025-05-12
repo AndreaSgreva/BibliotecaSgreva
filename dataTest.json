@@ -298,5 +298,20 @@
         "protagonisti": "Roberto Benigni",
         "regista": "Roberto Benigni",
         "titolo": "La vita è bella - TEST"
+    },
+    {
+        "anno": 2025,
+        "classe": "film",
+        "costo": 104.69,
+        "disponibile": true,
+        "durata": 90,
+        "genere": "italian brainrot",
+        "immagine": "/mnt/c/Users/Andrea Sgreva/Desktop/tung.jpg",
+        "lingua": "Italiano",
+        "numeroCopie": 5,
+        "numeroPrestiti": 3,
+        "protagonisti": "Tung Tung Tung Sahur",
+        "regista": "Andrea Sgreva",
+        "titolo": "Tung Tung Tung Sahur"
     }
 ]

@@ -123,7 +123,6 @@ void AdminPage::search() {
     if (!found) {
         QMessageBox::information(this, "Nessun risultato", "Nessun oggetto trovato con il titolo inserito.");
     }
-    contentLayout->setColumnStretch(maxColumns, 1);
 }
 
 //NUOVO - di Admin
@@ -341,6 +340,7 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
 
     // Imposta una dimensione fissa per i riquadri
     frame->setMinimumSize(335, 415);  // Larghezza e altezza minime
+    frame->setMaximumSize(365, 445);  // Larghezza e altezza massime
     frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     QVBoxLayout *frameLayout = new QVBoxLayout(frame);
