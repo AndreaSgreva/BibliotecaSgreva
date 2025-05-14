@@ -26,6 +26,7 @@ void Biblioteca::setTitolo(const string& title) { titolo = title; }
 void Biblioteca::setAnno(const int& year) { anno = year; }
 void Biblioteca::setGenere(const string& genre) { genere = genre; }
 void Biblioteca::setLingua(const string& language) { lingua = language; }
+void Biblioteca::setDisponibile(const bool& available) { disponibile = available; }
 void Biblioteca::setCosto(const double& cost) { costo = cost; }
 void Biblioteca::setNumeroCopie(const int& numberCopies) { numeroCopie = numberCopies; }
 void Biblioteca::setNumeroPrestiti(const int& numberLoans) { numeroPrestiti = numberLoans; }

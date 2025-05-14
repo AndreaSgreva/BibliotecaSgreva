@@ -249,6 +249,12 @@ void EditCreatePage::saveItem() {
         QMessageBox::warning(this, "Errore", "Non si possono avere più prestiti che copie!");
         return;
     }
+    // Aggiornamento disponibilità
+    if (loansEdit->value() == copiesEdit->value()) {
+        currentItem->setDisponibile(false);
+    } else if (loansEdit->value() < copiesEdit->value() && currentItem->getDisponibile() == false) {
+        currentItem->setDisponibile(true);
+    }
 
     // Creazione o modifica dell'oggetto
     if (currentMode == Create) {  // Modalità creazione

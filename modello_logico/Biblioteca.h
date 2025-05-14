@@ -39,6 +39,7 @@ class Biblioteca{
         void setAnno(const int& year);
         void setGenere(const string& genre);
         void setLingua(const string& language);
+        void setDisponibile(const bool& available);
         void setCosto(const double& cost);
         void setNumeroCopie(const int& numberCopies);
         void setNumeroPrestiti(const int& numberLoans);
