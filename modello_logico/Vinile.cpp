@@ -20,26 +20,6 @@ void Vinile::setCasaDiscografica(const string& recordCompany) { casaDiscografica
 void Vinile::setRPM(const int& rpm) { this->rpm = rpm; }
 
 //metodi
-void Vinile::stampaInfo() const {
-    cout << *this << endl;
-}
 void Vinile::accept(Visitor* visitor) { 
     visitor->visit(this); 
-}
-
-//overloading
-std::ostream& operator<<(std::ostream& os, const Vinile& vinile) {
-    os << "Immagine: " << vinile.getImmagine() << endl;
-    os << "Titolo: " << vinile.getTitolo() << endl;
-    os << "Anno: " << vinile.getAnno() << endl;
-    os << "Genere: " << vinile.getGenere() << endl;    
-    os << "Lingua: " << vinile.getLingua() << endl;
-    os << "Disponibile: " << (vinile.getDisponibile() ? "Si" : "No") << endl;
-    os << "Costo: " << vinile.getCosto() << " euro"<< endl;
-    os << "Numero Copie: " << vinile.getNumeroCopie() << endl;
-    os << "Numero Prestiti: " << vinile.getNumeroPrestiti() << endl;
-    os << "Artista: " << vinile.getArtista() << endl;
-    os << "Casa Discografica: " << vinile.getCasaDiscografica() << endl;
-    os << "Velocita' di riproduzione: " << vinile.getRPM() <<" rpm"<< endl;
-    return os;
 }

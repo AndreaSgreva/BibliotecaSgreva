@@ -26,11 +26,7 @@ class Vinile : public Biblioteca {
         void setRPM(const int& rpm);
 
         //metodi
-        virtual void stampaInfo() const override;
         virtual void accept(Visitor* visitor) override;
 };
-
-//overloading
-std::ostream& operator<<(std::ostream& os, const Vinile& vinile);
 
 #endif

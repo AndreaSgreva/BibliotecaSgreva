@@ -26,12 +26,8 @@ class Libro : public Biblioteca {
         void setISBN(const string& code);
 
         //metodi
-        virtual void stampaInfo() const override;
         virtual void accept(Visitor* visitor) override;
 
 };
-
-//overloading
-//std::ostream& operator<<(std::ostream& os, const Libro& libro);
 
 #endif

@@ -26,11 +26,6 @@ class Film : public Biblioteca {
         void setDurata(const int& duration);
         
         //metodi
-        virtual void stampaInfo() const override;
         virtual void accept(Visitor* visitor) override;
 };
-
-//overloading
-std::ostream& operator<<(std::ostream& os, const Film& film);
-
 #endif

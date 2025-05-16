@@ -20,26 +20,6 @@ void Film::setProtagonista(const string& protagonist) { protagonista = protagoni
 void Film::setDurata(const int& duration) { durata = duration; }
 
 //metodi
-void Film::stampaInfo() const {
-    cout << *this << endl;
-}
 void Film::accept(Visitor* visitor) { 
     visitor->visit(this); 
-}
-
-//overloading
-std::ostream& operator<<(std::ostream& os, const Film& film) {
-    os << "Immagine: " << film.getImmagine() << endl;
-    os << "Titolo: " << film.getTitolo() << endl;
-    os << "Anno: " << film.getAnno() << endl;
-    os << "Genere: " << film.getGenere() << endl;   
-    os << "Lingua: " << film.getLingua() << endl; 
-    os << "Disponibile: " << (film.getDisponibile() ? "Si" : "No") << endl;
-    os << "Costo: " << film.getCosto() << " euro"<< endl;
-    os << "Numero Copie: " << film.getNumeroCopie() << endl;
-    os << "Numero Prestiti: " << film.getNumeroPrestiti() << endl;
-    os << "Regista: " << film.getRegista() << endl;
-    os << "Protagonista: " << film.getProtagonista() << endl;
-    os << "Durata: " << film.getDurata() << " minuti"<< endl;
-    return os;
 }

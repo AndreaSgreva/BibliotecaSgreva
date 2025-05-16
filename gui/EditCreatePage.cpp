@@ -216,29 +216,6 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
     formLayout->addRow("RPM:", rpmEdit);
 }
 
-/*void EditCreatePage::saveItem() {
-    if (titleEdit->text().isEmpty()) {
-        QMessageBox::warning(this, "Errore", "Il titolo è obbligatorio!");
-        return;
-    }
-    Biblioteca* item = currentMode == Edit ? currentItem : createNewItem();
-    
-    item->setTitolo(titleEdit->text().toStdString());
-    item->setAnno(yearEdit->value());
-    item->setGenere(genreEdit->text().toStdString());
-    item->setLingua(languageCombo->currentText().toStdString());
-    item->setCosto(costEdit->value());
-    item->setNumeroCopie(copiesEdit->value());    
-
-    if(currentMode == Create) {
-        emit itemCreated(item);
-    } else {
-        emit itemUpdated(item);
-    }
-    
-    clearFields();  //pulisci i campi dopo il salvataggio
-    goBack();
-}*/
 void EditCreatePage::saveItem() {
     // Validazione dei campi
     if (titleEdit->text().isEmpty() || genreEdit->text().isEmpty()) {

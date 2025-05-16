@@ -31,38 +31,18 @@ void Biblioteca::setCosto(const double& cost) { costo = cost; }
 void Biblioteca::setNumeroCopie(const int& numberCopies) { numeroCopie = numberCopies; }
 void Biblioteca::setNumeroPrestiti(const int& numberLoans) { numeroPrestiti = numberLoans; }
 
-
-//metodi
-/*void Biblioteca::stampaInfo() const {
-    cout << this << endl;
-}*/
-
-void Biblioteca::prenota() {
-    if (disponibile){
-        numeroPrestiti++;
-        if (numeroPrestiti == numeroCopie) {
-            cout << "Prestiti finiti" << endl;
-            disponibile = false;
-        }
-    }
-    else cout << "Copie non disponibili" << endl;
-    return;
-}
-void Biblioteca::restituisci() {    
-    if(!disponibile) disponibile = true;
-    if(numeroPrestiti > 0) numeroPrestiti--;
+bool Biblioteca::prenota() {
+    if (numeroPrestiti >= numeroCopie) return false;
+    
+    numeroPrestiti++;
+    disponibile = (numeroPrestiti < numeroCopie);
+    return true;
 }
 
-//overloading
-std::ostream& operator<<(std::ostream& os, const Biblioteca& b) {
-    os << "Titolo: " << b.getTitolo() << endl;
-    os << "Anno: " << b.getAnno() << endl;
-    os << "Genere: " << b.getGenere() << endl;   
-    os << "Lingua: " << b.getLingua() << endl; 
-    os << "Disponibile: " << (b.getDisponibile() ? "Si" : "No") << endl;
-    os << "Costo: " << b.getCosto() << " euro"<< endl;
-    os << "Numero Copie: " << b.getNumeroCopie() << endl;
-    os << "Numero Prestiti: " << b.getNumeroPrestiti() << endl;
-    return os;
+bool Biblioteca::restituisci() {
+    if (numeroPrestiti <= 0) return false;
+    
+    numeroPrestiti--;
+    disponibile = true;
+    return true;
 }
-

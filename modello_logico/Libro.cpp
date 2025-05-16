@@ -21,27 +21,6 @@ void Libro::setPagine(const int& pages) { pagine = pages; }
 void Libro::setISBN(const string& code) { isbn = code; }
 
 //metodi
-void Libro::stampaInfo() const{
-    cout << *this << endl;
-}
 void Libro::accept(Visitor* visitor) { 
     visitor->visit(this); 
-}
-
-//overloading
-std::ostream& operator<<(std::ostream& os, const Libro& libro) {
-    os << "Immagine: " << libro.getImmagine() << endl;
-    os << "Titolo: " << libro.getTitolo() << endl;
-    os << "Anno: " << libro.getAnno() << endl;
-    os << "Genere: " << libro.getGenere() << endl;   
-    os << "Lingua: " << libro.getLingua() << endl; 
-    os << "Disponibile: " << (libro.getDisponibile() ? "Si" : "No") << endl;
-    os << "Costo: " << libro.getCosto() << " euro"<< endl;
-    os << "Numero Copie: " << libro.getNumeroCopie() << endl;
-    os << "Numero Prestiti: " << libro.getNumeroPrestiti() << endl;
-    os << "Autore: " << libro.getAutore() << endl;
-    os << "Pagine: " << libro.getPagine() << endl;
-    //os << "Lingua: " << libro.getLingua() << endl;
-    os << "ISBN: " << libro.getISBN() << endl;
-    return os;
 }

@@ -45,14 +45,10 @@ class Biblioteca{
         void setNumeroPrestiti(const int& numberLoans);
         
         //metodi
-        virtual void stampaInfo() const = 0;
         virtual void accept(Visitor* visitor) = 0;
-        void prenota();
-        void restituisci();
+        bool prenota();
+        bool restituisci();
 
 };
-
-//overloading
-std::ostream& operator<<(std::ostream& os, const Biblioteca& biblioteca);
 
 #endif

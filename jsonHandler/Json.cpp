@@ -8,8 +8,6 @@
 #include "../modello_logico/Libro.h"
 #include "../modello_logico/Film.h"
 #include "../modello_logico/Vinile.h"
-
-// NUOVO
 #include "JsonObserver.h"
 
 Json::Json(const QString &filePath, QObject *parent) : QObject(parent), path(filePath) {}
@@ -186,7 +184,7 @@ bool Json::aggiungiOggetto(Biblioteca* oggetto) {
     newObj["numeroCopie"] = oggetto->getNumeroCopie();
     newObj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
 
-    // Dynamic cast per tipo specifico
+    // Inserimento delle informazioni specifiche
     if (typeid(*oggetto) == typeid(Libro)) {
         Libro* libro = static_cast<Libro*>(oggetto);
         newObj["classe"] = "libro";
@@ -215,7 +213,6 @@ bool Json::aggiungiOggetto(Biblioteca* oggetto) {
         qCritical() << "Impossibile aprire il file per il salvataggio";
         return false;
     }
-
     
     if (file.write(QJsonDocument(jsonArray).toJson()) != -1) {
         biblioteca.append(oggetto);
@@ -225,9 +222,6 @@ bool Json::aggiungiOggetto(Biblioteca* oggetto) {
     }
     file.close();
     return false;
-    /*file.write(QJsonDocument(jsonArray).toJson());
-    file.close();
-    return true;*/
 }
 
 // Metodo per modificare un oggetto nel file JSON
@@ -258,7 +252,7 @@ bool Json::modificaOggetto(Biblioteca* oggetto) {
     obj["numeroCopie"] = oggetto->getNumeroCopie();
     obj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
 
-    // Dynamic cast per tipo specifico
+    // Inserimento delle informazioni specifiche
     if (typeid(*oggetto) == typeid(Libro)) {
         Libro* libro = static_cast<Libro*>(oggetto);
         obj["classe"] = "libro";
@@ -293,7 +287,7 @@ bool Json::modificaOggetto(Biblioteca* oggetto) {
         if (index >= 0 && index < biblioteca.size()) {
             // Aggiorna le proprietà dell'oggetto esistente
             Biblioteca* existingObj = biblioteca[index];
-            *existingObj = *oggetto; // Assumendo che ci siano operatori di copia implementati correttamente
+            *existingObj = *oggetto;
         }
         file.close();
         notificaObservers();
