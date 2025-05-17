@@ -1,4 +1,4 @@
-- ORA CRASHA QUANDO CREI OGGETTO
+- leggero fix immagine
 - VEDI DISCORSO PREZZI
 - CONTROLLA POLIMORFISMO SHOWOGGETTO (FILTRI,ECC,...)
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
