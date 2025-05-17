@@ -10,7 +10,7 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     mainLayout = new QVBoxLayout(this);
     formLayout = new QFormLayout();
 
-    setupCommonFields(); //appena aggiunto  VEDI SE SERVE
+    //setupCommonFields(); //appena aggiunto  VEDI SE SERVE
     // PROVA
     mainLayout->addLayout(formLayout);
     
@@ -63,7 +63,7 @@ void EditCreatePage::setupForCreation() {
     connect(&vinileButton, &QPushButton::clicked, [&]() {
         currentType = "Vinile";
         typeDialog.accept();
-        setupCommonFields();
+        //setupCommonFields();
         setupVinileFields();
     });
     
@@ -92,8 +92,6 @@ void EditCreatePage::visit(Vinile* vinile) {
 }
 
 void EditCreatePage::setupCommonFields() {
-    cleanLayout();
-
     // Campo per il percorso immagine
     QHBoxLayout* imageLayout = new QHBoxLayout();
     imagePathEdit = new QLineEdit(currentItem ? QString::fromStdString(currentItem->getImmagine()) : "");
@@ -315,25 +313,26 @@ Biblioteca* EditCreatePage::createNewItem() {
     if(currentType == "Libro") {
         return new Libro(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(), 
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
-                        copiesEdit->value() == loansEdit->value() ? false : true, 
+                        copiesEdit->value() > loansEdit->value(), 
                         costEdit->value(), copiesEdit->value(), loansEdit->value(),
                         authorEdit->text().toStdString(), pagesEdit->value(), isbnEdit->text().toStdString());
     } else if(currentType == "Film") {
         return new Film(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                        genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
-                       copiesEdit->value() == loansEdit->value() ? false : true, 
+                       copiesEdit->value() > loansEdit->value(), 
                        costEdit->value(), copiesEdit->value(), loansEdit->value(),
                        directorEdit->text().toStdString(), protagonistEdit->text().toStdString(), durationEdit->value());
     } else {
         return new Vinile(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                          genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
-                         copiesEdit->value() == loansEdit->value() ? false : true, 
+                         copiesEdit->value() > loansEdit->value(), 
                          costEdit->value(), copiesEdit->value(), loansEdit->value(),
                          artistEdit->text().toStdString(), recordCompanyEdit->text().toStdString(), rpmEdit->value());
     }
 }
 
 void EditCreatePage::goBack() {
+    cleanLayout();
     stack->setCurrentIndex(2);
 }
 
@@ -347,13 +346,3 @@ void EditCreatePage::cleanLayout() {
         delete item;
     }
 }
-/*void EditCreatePage::cleanLayout() {
-    QLayoutItem* item;
-    while((item = formLayout->takeAt(0))) {  // takeAt restituisce nullptr se non ci sono elementi
-        if(item->widget()) {
-            formLayout->removeWidget(item->widget()); // Rimuove prima il widget
-            item->widget()->deleteLater();
-        }
-        delete item;
-    }
-}*/
