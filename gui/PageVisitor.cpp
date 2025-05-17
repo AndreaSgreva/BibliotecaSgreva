@@ -53,6 +53,9 @@ void PageVisitor::visit(Biblioteca *biblioteca){
     imageLayout->addWidget(imageLabel);
     imageLayout->addStretch();
 
+    // Stile
+    titleLabel->setStyleSheet("font-size: 16px; color:rgb(19, 64, 110);");
+
     // Aggiunta delle informazioni al form layout
     detailsLayout->addRow("Titolo:", titleLabel);
     detailsLayout->addRow("Anno:", yearLabel);

@@ -216,29 +216,73 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
     formLayout->addRow("RPM:", rpmEdit);
 }
 
-void EditCreatePage::saveItem() {
+void EditCreatePage::aggiornaDisponibilità(Biblioteca* item) {
+    if (item->getNumeroPrestiti() == item->getNumeroCopie()) {
+        item->setDisponibile(false);
+    } else if (item->getNumeroPrestiti() < item->getNumeroCopie()) {
+        item->setDisponibile(true);
+    }
+}
+
+bool EditCreatePage::aggiornaFields(Biblioteca* item){
     // Validazione dei campi
     if (titleEdit->text().isEmpty() || genreEdit->text().isEmpty()) {
         QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
-        return;
+        return false;
     }
     if (loansEdit->value() > copiesEdit->value()) {
         QMessageBox::warning(this, "Errore", "Non si possono avere più prestiti che copie!");
-        return;
+        return false;
     }
-    // Aggiornamento disponibilità
-    if (loansEdit->value() == copiesEdit->value()) {
-        currentItem->setDisponibile(false);
-    } else if (loansEdit->value() < copiesEdit->value() && currentItem->getDisponibile() == false) {
-        currentItem->setDisponibile(true);
-    }
+    item->setTitolo(titleEdit->text().toStdString());
+    item->setAnno(yearEdit->value());
+    item->setGenere(genreEdit->text().toStdString());
+    item->setLingua(languageCombo->currentText().toStdString());
+    item->setCosto(costEdit->value());
+    item->setNumeroCopie(copiesEdit->value());
+    item->setNumeroPrestiti(loansEdit->value());
+    item->setImmagine(imagePathEdit->text().toStdString());
+    return aggiornaSpecificFields(item);
+}
 
+bool EditCreatePage::aggiornaSpecificFields(Biblioteca* item) {
+    if (auto libro = dynamic_cast<Libro*>(item)) {
+        if (authorEdit->text().isEmpty() || isbnEdit->text().isEmpty()) {
+            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
+            return false;
+        }
+        libro->setAutore(authorEdit->text().toStdString());
+        libro->setPagine(pagesEdit->value());
+        libro->setISBN(isbnEdit->text().toStdString());
+    }
+    else if (auto film = dynamic_cast<Film*>(item)) {
+        if (directorEdit->text().isEmpty() || protagonistEdit->text().isEmpty()) {
+            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
+            return false;
+        }
+        film->setRegista(directorEdit->text().toStdString());
+        film->setProtagonista(protagonistEdit->text().toStdString());
+        film->setDurata(durationEdit->value());
+    }
+    else if (auto vinile = dynamic_cast<Vinile*>(item)) {
+        if (artistEdit->text().isEmpty() || recordCompanyEdit->text().isEmpty()) {
+            QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
+            return false;
+        }
+        vinile->setArtista(artistEdit->text().toStdString());
+        vinile->setCasaDiscografica(recordCompanyEdit->text().toStdString());
+        vinile->setRPM(rpmEdit->value());
+    }
+    return true;
+}
+
+void EditCreatePage::saveItem() {
     // Creazione o modifica dell'oggetto
     if (currentMode == Create) {  // Modalità creazione
         Biblioteca* newItem = createNewItem();
-        if (newItem) {
-            emit itemCreated(newItem);
-        }
+        if (!aggiornaFields(newItem)) return;
+        aggiornaDisponibilità(newItem);
+        emit itemCreated(newItem);
     } 
     else { // Modalità modifica
         if (!currentItem) {
@@ -246,44 +290,8 @@ void EditCreatePage::saveItem() {
             return;
         }
 
-        // Aggiorna l'oggetto esistente invece di crearne uno nuovo
-        currentItem->setTitolo(titleEdit->text().toStdString());
-        currentItem->setAnno(yearEdit->value());
-        currentItem->setGenere(genreEdit->text().toStdString());
-        currentItem->setLingua(languageCombo->currentText().toStdString());
-        currentItem->setCosto(costEdit->value());
-        currentItem->setNumeroCopie(copiesEdit->value());
-        currentItem->setNumeroPrestiti(loansEdit->value());
-        currentItem->setImmagine(imagePathEdit->text().toStdString());
-
-        // Aggiorna campi specifici in base al tipo
-        if (auto libro = dynamic_cast<Libro*>(currentItem)) {
-            if (authorEdit->text().isEmpty() || isbnEdit->text().isEmpty()) {
-                QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
-                return;
-            }
-            libro->setAutore(authorEdit->text().toStdString());
-            libro->setPagine(pagesEdit->value());
-            libro->setISBN(isbnEdit->text().toStdString());
-        }
-        else if (auto film = dynamic_cast<Film*>(currentItem)) {
-            if (directorEdit->text().isEmpty() || protagonistEdit->text().isEmpty()) {
-                QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
-                return;
-            }
-            film->setRegista(directorEdit->text().toStdString());
-            film->setProtagonista(protagonistEdit->text().toStdString());
-            film->setDurata(durationEdit->value());
-        }
-        else if (auto vinile = dynamic_cast<Vinile*>(currentItem)) {
-            if (artistEdit->text().isEmpty() || recordCompanyEdit->text().isEmpty()) {
-                QMessageBox::warning(this, "Errore", "Compila tutti i campi necessari!");
-                return;
-            }
-            vinile->setArtista(artistEdit->text().toStdString());
-            vinile->setCasaDiscografica(recordCompanyEdit->text().toStdString());
-            vinile->setRPM(rpmEdit->value());
-        }
+        if (!aggiornaFields(currentItem)) return;
+        aggiornaDisponibilità(currentItem);
 
         emit itemUpdated(currentItem);
     }

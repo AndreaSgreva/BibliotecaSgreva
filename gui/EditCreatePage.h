@@ -31,6 +31,17 @@ public:
     void visit(Film* film) override;
     void visit(Vinile* vinile) override;
 
+    void setupCommonFields();
+    void setupBookFields(Libro* libro = nullptr);
+    void setupFilmFields(Film* film = nullptr);
+    void setupVinileFields(Vinile* vinile = nullptr);
+    void cleanLayout();
+    Biblioteca* createNewItem();
+
+    void aggiornaDisponibilità(Biblioteca* item);
+    bool aggiornaFields(Biblioteca* item);
+    bool aggiornaSpecificFields(Biblioteca* item);
+
 signals:
     void itemCreated(Biblioteca* newItem);
     void itemUpdated(Biblioteca* updatedItem);
@@ -40,13 +51,6 @@ private slots:
     void goBack();
 
 private:
-    void setupCommonFields();
-    void setupBookFields(Libro* libro = nullptr);
-    void setupFilmFields(Film* film = nullptr);
-    void setupVinileFields(Vinile* vinile = nullptr);
-    void cleanLayout();
-    Biblioteca* createNewItem();
-
     QStackedWidget* stack;
     Mode currentMode;
     Biblioteca* currentItem;

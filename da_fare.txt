@@ -1,6 +1,5 @@
-
-- se si mettono copie e prestiti uguali non diventa "non disponibile"
-- MEGLIO TYPEID O DYNAMIC_CAST (CONTROLLA JSON.CPP)
+- ORA CRASHA QUANDO CREI OGGETTO
+- VEDI DISCORSO PREZZI
 - CONTROLLA POLIMORFISMO SHOWOGGETTO (FILTRI,ECC,...)
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
 - SERVE COPIA PROFONDA O QT FA DA SOLO? Vedi Json::modificaOggetto(Biblioteca* oggetto)
