@@ -1,3 +1,4 @@
+- sistema searchbar
 - leggero fix immagine
 - VEDI DISCORSO PREZZI
 - CONTROLLA POLIMORFISMO SHOWOGGETTO (FILTRI,ECC,...)

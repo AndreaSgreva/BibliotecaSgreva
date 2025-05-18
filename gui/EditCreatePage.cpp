@@ -140,6 +140,8 @@ void EditCreatePage::setupCommonFields() {
     costEdit->setRange(0.01, 1000.0);
     costEdit->setValue(currentItem ? currentItem->getCosto() : 0.0);
     
+    costLabel = new QLabel("");   //PROVAA
+
     copiesEdit = new QSpinBox();
     copiesEdit->setRange(1, 100);
     copiesEdit->setValue(currentItem ? currentItem->getNumeroCopie() : 1);
@@ -163,7 +165,8 @@ void EditCreatePage::setupCommonFields() {
     formLayout->addRow("Anno:", yearEdit);
     formLayout->addRow("Genere:", genreEdit);
     formLayout->addRow("Lingua:", languageCombo);
-    formLayout->addRow("Costo (€):", costEdit);
+    //formLayout->addRow("Costo (€):", costEdit);
+    formLayout->addRow("Costo (€):", costLabel);
     formLayout->addRow("Numero Copie:", copiesEdit);
     formLayout->addRow("Numero Prestiti:", loansEdit);
 }
@@ -175,6 +178,8 @@ void EditCreatePage::setupBookFields(Libro* libro) {
     pagesEdit->setValue(libro ? libro->getPagine() : 200);
     
     isbnEdit = new QLineEdit(libro ? QString::fromStdString(libro->getISBN()) : "");
+
+    costLabel->setText("10 .");
     
     formLayout->addRow("Autore:", authorEdit);
     formLayout->addRow("Pagine:", pagesEdit);
@@ -185,6 +190,8 @@ void EditCreatePage::setupFilmFields(Film* film) {
     directorEdit = new QLineEdit(film ? QString::fromStdString(film->getRegista()) : "");
     protagonistEdit = new QLineEdit(film ? QString::fromStdString(film->getProtagonista()) : "");
     
+    costLabel->setText("20");   
+
     durationEdit = new QSpinBox();
     durationEdit->setRange(1, 300);
     durationEdit->setValue(film ? film->getDurata() : 120);
@@ -198,13 +205,18 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
     artistEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getArtista()) : "");
     recordCompanyEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getCasaDiscografica()) : "");
     
-    rpmEdit = new QSpinBox();
-    rpmEdit->setRange(33, 78);
-    rpmEdit->setValue(vinile ? vinile->getRPM() : 33);
+    costLabel->setText("30");
+
+    rpmCombo = new QComboBox();
+    rpmCombo->addItems({"33", "45"});
+    if (vinile) {
+        int index = rpmCombo->findText(QString::number(vinile->getRPM()));
+        if (index >= 0) rpmCombo->setCurrentIndex(index);
+    }
     
     formLayout->addRow("Artista:", artistEdit);
     formLayout->addRow("Casa discografica:", recordCompanyEdit);
-    formLayout->addRow("RPM:", rpmEdit);
+    formLayout->addRow("RPM:", rpmCombo);
 }
 
 void EditCreatePage::aggiornaDisponibilità(Biblioteca* item) {
@@ -229,7 +241,7 @@ bool EditCreatePage::aggiornaFields(Biblioteca* item){
     item->setAnno(yearEdit->value());
     item->setGenere(genreEdit->text().toStdString());
     item->setLingua(languageCombo->currentText().toStdString());
-    item->setCosto(costEdit->value());
+    //item->setCosto(costEdit->value());
     item->setNumeroCopie(copiesEdit->value());
     item->setNumeroPrestiti(loansEdit->value());
     item->setImmagine(imagePathEdit->text().toStdString());
@@ -245,6 +257,8 @@ bool EditCreatePage::aggiornaSpecificFields(Biblioteca* item) {
         libro->setAutore(authorEdit->text().toStdString());
         libro->setPagine(pagesEdit->value());
         libro->setISBN(isbnEdit->text().toStdString());
+
+        //libro->setCosto(10)
     }
     else if (auto film = dynamic_cast<Film*>(item)) {
         if (directorEdit->text().isEmpty() || protagonistEdit->text().isEmpty()) {
@@ -262,7 +276,7 @@ bool EditCreatePage::aggiornaSpecificFields(Biblioteca* item) {
         }
         vinile->setArtista(artistEdit->text().toStdString());
         vinile->setCasaDiscografica(recordCompanyEdit->text().toStdString());
-        vinile->setRPM(rpmEdit->value());
+        vinile->setRPM(rpmCombo->currentText().toInt());
     }
     return true;
 }
@@ -294,20 +308,20 @@ Biblioteca* EditCreatePage::createNewItem() {
         return new Libro(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(), 
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
                         copiesEdit->value() > loansEdit->value(), 
-                        costEdit->value(), copiesEdit->value(), loansEdit->value(),
+                        10, copiesEdit->value(), loansEdit->value(),
                         authorEdit->text().toStdString(), pagesEdit->value(), isbnEdit->text().toStdString());
     } else if(currentType == "Film") {
         return new Film(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
                         copiesEdit->value() > loansEdit->value(), 
-                        costEdit->value(), copiesEdit->value(), loansEdit->value(),
+                        20, copiesEdit->value(), loansEdit->value(),
                         directorEdit->text().toStdString(), protagonistEdit->text().toStdString(), durationEdit->value());
     } else {
         return new Vinile(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
                         copiesEdit->value() > loansEdit->value(), 
-                        costEdit->value(), copiesEdit->value(), loansEdit->value(),
-                        artistEdit->text().toStdString(), recordCompanyEdit->text().toStdString(), rpmEdit->value());
+                        30, copiesEdit->value(), loansEdit->value(),
+                        artistEdit->text().toStdString(), recordCompanyEdit->text().toStdString(), rpmCombo->currentText().toInt());
     }
 }
 
@@ -346,5 +360,5 @@ void EditCreatePage::cleanLayout() {
 
     artistEdit = nullptr;
     recordCompanyEdit = nullptr;
-    rpmEdit = nullptr;
+    rpmCombo = nullptr;
 }

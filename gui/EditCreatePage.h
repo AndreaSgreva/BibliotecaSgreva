@@ -64,6 +64,9 @@ private:
     QLineEdit* genreEdit;
     QComboBox* languageCombo;
     QDoubleSpinBox* costEdit;
+
+    QLabel* costLabel;
+
     QSpinBox* copiesEdit;
     QSpinBox* loansEdit;
     
@@ -77,14 +80,12 @@ private:
     
     QLineEdit* artistEdit;
     QLineEdit* recordCompanyEdit;
-    QSpinBox* rpmEdit;
+    QComboBox* rpmCombo;
 
     //per immagine
     QLineEdit* imagePathEdit;
     QPushButton* browseImageButton;
     QLabel* imagePreview;
-
-    void clearFields();
 };
 
 #endif // EDITCREATEPAGE_H
