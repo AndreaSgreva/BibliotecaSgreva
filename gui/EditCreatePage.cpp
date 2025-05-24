@@ -90,9 +90,9 @@ void EditCreatePage::visit(Vinile* vinile) {
 
 void EditCreatePage::setupCommonFields() {
     // Campo per il percorso immagine
-    QHBoxLayout* imageLayout = new QHBoxLayout();
+    //QHBoxLayout* imageLayout = new QHBoxLayout();
     imagePathEdit = new QLineEdit(currentItem ? QString::fromStdString(currentItem->getImmagine()) : "");
-    browseImageButton = new QPushButton("Sfoglia...");
+    browseImageButton = new QPushButton("Sfoglia immagine da locale...");
     
     connect(browseImageButton, &QPushButton::clicked, this, [this]() {
         QString filePath = QFileDialog::getOpenFileName(this, "Seleziona immagine", "", "Immagini (*.png *.jpg *.jpeg)");
@@ -101,11 +101,10 @@ void EditCreatePage::setupCommonFields() {
         }
     });
 
-    imageLayout->addWidget(imagePathEdit);
-    imageLayout->addWidget(browseImageButton);
-    formLayout->addRow("Immagine:", imageLayout);
+    //imageLayout->addWidget(imagePathEdit);
+    //imageLayout->addWidget(browseImageButton);
 
-    // PROVA PREVIEW IMMAGINE
+    // PREVIEW IMMAGINE
     imagePreview = new QLabel();
     imagePreview->setFixedSize(200, 200);
     imagePreview->setAlignment(Qt::AlignCenter);
@@ -160,6 +159,9 @@ void EditCreatePage::setupCommonFields() {
         }   
     });
 
+    formLayout->addRow("Immagine:", imagePathEdit);
+    formLayout->addWidget(browseImageButton);
+
     formLayout->addRow("Anteprima:", imagePreview);
     formLayout->addRow("Titolo:", titleEdit);
     formLayout->addRow("Anno:", yearEdit);
@@ -179,7 +181,7 @@ void EditCreatePage::setupBookFields(Libro* libro) {
     
     isbnEdit = new QLineEdit(libro ? QString::fromStdString(libro->getISBN()) : "");
 
-    costLabel->setText("10 .");
+    costLabel->setText("1.50");
     
     formLayout->addRow("Autore:", authorEdit);
     formLayout->addRow("Pagine:", pagesEdit);
@@ -190,7 +192,7 @@ void EditCreatePage::setupFilmFields(Film* film) {
     directorEdit = new QLineEdit(film ? QString::fromStdString(film->getRegista()) : "");
     protagonistEdit = new QLineEdit(film ? QString::fromStdString(film->getProtagonista()) : "");
     
-    costLabel->setText("20");   
+    costLabel->setText("3.50");   
 
     durationEdit = new QSpinBox();
     durationEdit->setRange(1, 300);
@@ -205,7 +207,7 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
     artistEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getArtista()) : "");
     recordCompanyEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getCasaDiscografica()) : "");
     
-    costLabel->setText("30");
+    costLabel->setText("5.00");
 
     rpmCombo = new QComboBox();
     rpmCombo->addItems({"33", "45"});
@@ -338,6 +340,8 @@ void EditCreatePage::cleanLayout() {
         }
         delete item;
     }
+
+    
     // Azzera i puntatori per evitare accessi a memoria invalidata
     imagePathEdit = nullptr;
     browseImageButton = nullptr;
