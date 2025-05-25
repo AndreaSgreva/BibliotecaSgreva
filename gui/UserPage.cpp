@@ -73,11 +73,11 @@ UserPage::UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidge
     labelPrestiti->setStyleSheet("font-size: 18px;");
     userLayout->addWidget(labelPrestiti);
 
-    backButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
-    filterButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
-    searchButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
-    exitButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
-    searchBar->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
+    backButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    filterButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    searchButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    searchBar->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
     // Imposta il layout principale
     setLayout(userLayout);

@@ -26,7 +26,7 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
     QWidget *exitWidget = new QWidget(loginWidget);
     QPushButton *exitButton = new QPushButton("Esci", exitWidget);
     exitButton->setFixedSize(120, 40);
-    exitButton->setStyleSheet("font-size: 18px; padding: 5px;");
+    exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0); font-size: 18px; padding: 5px;");
     connect(exitButton, &QPushButton::clicked, this, &MainWindow::close);
 
     topLayout->addWidget(exitButton);
@@ -46,18 +46,18 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
     adminUsername = new QLineEdit(adminWidget);
     adminUsername->setPlaceholderText("Username");
     adminUsername->setFixedSize(300, 40);  // Imposta una larghezza specifica
-    adminUsername->setStyleSheet("font-size: 18px; padding: 5px;");
+    adminUsername->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0); font-size: 18px; padding: 5px;");
 
     adminPassword = new QLineEdit(adminWidget);
     adminPassword->setPlaceholderText("Password");
     adminPassword->setEchoMode(QLineEdit::Password);
     adminPassword->setFixedSize(300, 40);
-    adminPassword->setStyleSheet("font-size: 18px; padding: 5px;");
+    adminPassword->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0); font-size: 18px; padding: 5px;");
 
     QPushButton *adminLoginButton = new QPushButton("Accedi come Admin", adminWidget);
     adminLoginButton->setFixedSize(250, 50);
     adminLoginButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    adminLoginButton->setStyleSheet("font-size: 20px; padding: 10px;");
+    adminLoginButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0); font-size: 20px; padding: 10px;");
     connect(adminLoginButton, &QPushButton::clicked, this, &MainWindow::handleAdminAccess);
 
     adminLayout->addWidget(adminLabel);
@@ -78,7 +78,7 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
     QPushButton *userAccessButton = new QPushButton("Accedi come Utente", userWidget);
     userAccessButton->setFixedSize(250, 50);
     userAccessButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    userAccessButton->setStyleSheet("font-size: 20px; padding: 10px;");
+    userAccessButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0); font-size: 20px; padding: 10px;");
     connect(userAccessButton, &QPushButton::clicked, this, &MainWindow::handleUserAccess);
 
     userLayout->addWidget(userLabel);
@@ -93,9 +93,14 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
 
     setCentralWidget(loginWidget);
 
-    loginWidget->setStyleSheet("background-color: rgb(104, 193, 225);"); 
+    //loginWidget->setStyleSheet("background-color: rgb(104, 193, 225);"); 
     //userWidget->setStyleSheet("background-color: rgb(175, 238, 238);"); 
     //adminWidget->setStyleSheet("background-color: rgb(175, 238, 238);"); 
+    //exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    //userAccessButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    //adminLoginButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    //adminUsername->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    //adminPassword->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
 }
 
 // Metodo per gestire l'accesso come Admin
