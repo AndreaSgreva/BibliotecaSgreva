@@ -67,7 +67,6 @@ private:
     QSpinBox* yearEdit;
     QLineEdit* genreEdit;
     QComboBox* languageCombo;
-    QDoubleSpinBox* costEdit;
 
     QLabel* costLabel;
 

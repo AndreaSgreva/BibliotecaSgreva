@@ -39,8 +39,7 @@ AdminPage::AdminPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwid
     searchBar = new QLineEdit(this);
     searchBar->setPlaceholderText("Cerca per lettere...");
     searchBar->setFixedHeight(40);
-    searchBar->setMinimumWidth(630); // Larghezza minima per evitare che sparisca VEDI
-    //searchBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed); // NON FUNZIONA
+    searchBar->setMinimumWidth(630);
 
     // Pulsante di ricerca
     QPushButton *searchButton = new QPushButton("Cerca");

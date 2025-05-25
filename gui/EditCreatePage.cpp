@@ -24,7 +24,7 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     typeSelector->setMinimumWidth(200);
     typeSelector->setFixedHeight(40);
 
-    typeSelector->setStyleSheet("font-size: 16px; font-weight: bold; color:rgb(19, 64, 110);");
+    typeSelector->setStyleSheet("background-color: rgb(175, 238, 238); font-size: 16px; font-weight: bold; color:rgb(19, 64, 110);");
 
 
     mainLayout->addWidget(typeSelector);
@@ -34,6 +34,9 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     saveButton = new QPushButton("Salva");
     backButton = new QPushButton("Indietro");
+
+    backButton->setStyleSheet("background-color: rgb(175, 238, 238); font-weight: bold; color:rgb(0, 0, 0);");
+    saveButton->setStyleSheet("background-color: rgb(175, 238, 238); font-weight: bold; color:rgb(0, 0, 0);");
     
     connect(saveButton, &QPushButton::clicked, this, &EditCreatePage::saveItem);
     connect(backButton, &QPushButton::clicked, this, &EditCreatePage::goBack);
@@ -65,6 +68,8 @@ void EditCreatePage::setupForCreation() {
     currentMode = Create;
     currentItem = nullptr;
     typeSelector->setCurrentIndex(0);
+    typeSelector->setEnabled(true);
+    typeSelector->setVisible(true);
     saveButton->setEnabled(false);
     cleanLayout();
 }
@@ -73,7 +78,8 @@ void EditCreatePage::setupForEditing(Biblioteca* item) {
     currentMode = Edit;
     currentItem = item;
     cleanLayout();
-    
+    typeSelector->setEnabled(false);
+    typeSelector->setVisible(false);
     setupCommonFields();
     item->accept(this);
 }
@@ -106,7 +112,7 @@ void EditCreatePage::setupCommonFields() {
     imagePreview = new QLabel();
     imagePreview->setFixedSize(200, 200);
     imagePreview->setAlignment(Qt::AlignCenter);
-    imagePreview->setStyleSheet("border: 1px solid #ccc;");
+    imagePreview->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0); border: 1px solid #ccc;");
 
     if (currentItem && !QString::fromStdString(currentItem->getImmagine()).isEmpty()) {
         QPixmap pixmap(QString::fromStdString(currentItem->getImmagine()));
@@ -133,12 +139,8 @@ void EditCreatePage::setupCommonFields() {
         if(index >= 0) languageCombo->setCurrentIndex(index);
     }
     
-    costEdit = new QDoubleSpinBox();
-    costEdit->setRange(0.01, 1000.0);
-    costEdit->setValue(currentItem ? currentItem->getCosto() : 0.0);
-    
-    costLabel = new QLabel("");   //PROVAA
-
+    costLabel = new QLabel("");   
+    costLabel->setMinimumHeight(20);
     copiesEdit = new QSpinBox();
     copiesEdit->setRange(1, 100);
     copiesEdit->setValue(currentItem ? currentItem->getNumeroCopie() : 1);
@@ -157,15 +159,23 @@ void EditCreatePage::setupCommonFields() {
         }   
     });
 
+    imagePathEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    browseImageButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    titleEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    yearEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    genreEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    languageCombo->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    costLabel->setStyleSheet("background-color: rgb(175, 238, 238); border: 1px solid #9c9c9c; color:rgb(0, 0, 0);");
+    copiesEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    loansEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+
     formLayout->addRow("Immagine:", imagePathEdit);
     formLayout->addWidget(browseImageButton);
-
     formLayout->addRow("Anteprima:", imagePreview);
     formLayout->addRow("Titolo:", titleEdit);
     formLayout->addRow("Anno:", yearEdit);
     formLayout->addRow("Genere:", genreEdit);
     formLayout->addRow("Lingua:", languageCombo);
-    //formLayout->addRow("Costo (€):", costEdit);
     formLayout->addRow("Costo (€):", costLabel);
     formLayout->addRow("Numero Copie:", copiesEdit);
     formLayout->addRow("Numero Prestiti:", loansEdit);
@@ -180,6 +190,10 @@ void EditCreatePage::setupBookFields(Libro* libro) {
     isbnEdit = new QLineEdit(libro ? QString::fromStdString(libro->getISBN()) : "");
 
     costLabel->setText(QString::number(COSTO_LIBRO));
+
+    authorEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    pagesEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    isbnEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
     formLayout->addRow("Autore:", authorEdit);
     formLayout->addRow("Pagine:", pagesEdit);
@@ -195,6 +209,10 @@ void EditCreatePage::setupFilmFields(Film* film) {
     durationEdit = new QSpinBox();
     durationEdit->setRange(1, 300);
     durationEdit->setValue(film ? film->getDurata() : 120);
+
+    directorEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    protagonistEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    durationEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
     formLayout->addRow("Regista:", directorEdit);
     formLayout->addRow("Protagonista:", protagonistEdit);
@@ -213,6 +231,10 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
         int index = rpmCombo->findText(QString::number(vinile->getRPM()));
         if (index >= 0) rpmCombo->setCurrentIndex(index);
     }
+
+    artistEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    recordCompanyEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    rpmCombo->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
     formLayout->addRow("Artista:", artistEdit);
     formLayout->addRow("Casa discografica:", recordCompanyEdit);
@@ -241,7 +263,6 @@ bool EditCreatePage::aggiornaFields(Biblioteca* item){
     item->setAnno(yearEdit->value());
     item->setGenere(genreEdit->text().toStdString());
     item->setLingua(languageCombo->currentText().toStdString());
-    //item->setCosto(costEdit->value());
     item->setNumeroCopie(copiesEdit->value());
     item->setNumeroPrestiti(loansEdit->value());
     item->setImmagine(imagePathEdit->text().toStdString());
@@ -346,7 +367,6 @@ void EditCreatePage::cleanLayout() {
     yearEdit = nullptr;
     genreEdit = nullptr;
     languageCombo = nullptr;
-    costEdit = nullptr;
     copiesEdit = nullptr;
     loansEdit = nullptr;
 
