@@ -4,6 +4,10 @@
 #include <QDate>
 #include <QFileDialog>
 
+const double EditCreatePage::COSTO_LIBRO = 1.5;
+const double EditCreatePage::COSTO_FILM = 2.5;
+const double EditCreatePage::COSTO_VINILE = 4.0;
+
 EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent) 
     : QWidget(parent), stack(stackedWidget), currentItem(nullptr) {
     
@@ -65,48 +69,6 @@ void EditCreatePage::setupForCreation() {
     cleanLayout();
 }
 
-/*void EditCreatePage::setupForCreation() {
-    currentMode = Create;
-    currentItem = nullptr;
-    cleanLayout();
-    
-    QDialog typeDialog(this);
-    QVBoxLayout dialogLayout(&typeDialog);
-    
-    QLabel label("Seleziona il tipo di oggetto:");
-    QPushButton bookButton("Libro");
-    QPushButton filmButton("Film");
-    QPushButton vinileButton("Vinile");
-    
-    dialogLayout.addWidget(&label);
-    dialogLayout.addWidget(&bookButton);
-    dialogLayout.addWidget(&filmButton);
-    dialogLayout.addWidget(&vinileButton);
-    
-    connect(&bookButton, &QPushButton::clicked, [&]() {
-        currentType = "Libro";
-        typeDialog.accept();
-        setupCommonFields();
-        setupBookFields();
-    });
-    
-    connect(&filmButton, &QPushButton::clicked, [&]() {
-        currentType = "Film";
-        typeDialog.accept();
-        setupCommonFields();
-        setupFilmFields();
-    });
-    
-    connect(&vinileButton, &QPushButton::clicked, [&]() {
-        currentType = "Vinile";
-        typeDialog.accept();
-        setupCommonFields();
-        setupVinileFields();
-    });
-    
-    typeDialog.exec();
-}*/
-
 void EditCreatePage::setupForEditing(Biblioteca* item) {
     currentMode = Edit;
     currentItem = item;
@@ -130,7 +92,6 @@ void EditCreatePage::visit(Vinile* vinile) {
 
 void EditCreatePage::setupCommonFields() {
     // Campo per il percorso immagine
-    //QHBoxLayout* imageLayout = new QHBoxLayout();
     imagePathEdit = new QLineEdit(currentItem ? QString::fromStdString(currentItem->getImmagine()) : "");
     browseImageButton = new QPushButton("Sfoglia immagine da locale...");
     
@@ -140,9 +101,6 @@ void EditCreatePage::setupCommonFields() {
             imagePathEdit->setText(filePath);
         }
     });
-
-    //imageLayout->addWidget(imagePathEdit);
-    //imageLayout->addWidget(browseImageButton);
 
     // PREVIEW IMMAGINE
     imagePreview = new QLabel();
@@ -221,7 +179,7 @@ void EditCreatePage::setupBookFields(Libro* libro) {
     
     isbnEdit = new QLineEdit(libro ? QString::fromStdString(libro->getISBN()) : "");
 
-    costLabel->setText("1.50");
+    costLabel->setText(QString::number(COSTO_LIBRO));
     
     formLayout->addRow("Autore:", authorEdit);
     formLayout->addRow("Pagine:", pagesEdit);
@@ -232,7 +190,7 @@ void EditCreatePage::setupFilmFields(Film* film) {
     directorEdit = new QLineEdit(film ? QString::fromStdString(film->getRegista()) : "");
     protagonistEdit = new QLineEdit(film ? QString::fromStdString(film->getProtagonista()) : "");
     
-    costLabel->setText("3.50");   
+    costLabel->setText(QString::number(COSTO_FILM));   
 
     durationEdit = new QSpinBox();
     durationEdit->setRange(1, 300);
@@ -247,7 +205,7 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
     artistEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getArtista()) : "");
     recordCompanyEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getCasaDiscografica()) : "");
     
-    costLabel->setText("5.00");
+    costLabel->setText(QString::number(COSTO_VINILE));
 
     rpmCombo = new QComboBox();
     rpmCombo->addItems({"33", "45"});
@@ -299,8 +257,6 @@ bool EditCreatePage::aggiornaSpecificFields(Biblioteca* item) {
         libro->setAutore(authorEdit->text().toStdString());
         libro->setPagine(pagesEdit->value());
         libro->setISBN(isbnEdit->text().toStdString());
-
-        //libro->setCosto(10)
     }
     else if (auto film = dynamic_cast<Film*>(item)) {
         if (directorEdit->text().isEmpty() || protagonistEdit->text().isEmpty()) {
@@ -350,19 +306,19 @@ Biblioteca* EditCreatePage::createNewItem() {
         return new Libro(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(), 
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
                         copiesEdit->value() > loansEdit->value(), 
-                        10, copiesEdit->value(), loansEdit->value(),
+                        COSTO_LIBRO, copiesEdit->value(), loansEdit->value(),
                         authorEdit->text().toStdString(), pagesEdit->value(), isbnEdit->text().toStdString());
     } else if(currentType == "Film") {
         return new Film(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
                         copiesEdit->value() > loansEdit->value(), 
-                        20, copiesEdit->value(), loansEdit->value(),
+                        COSTO_FILM, copiesEdit->value(), loansEdit->value(),
                         directorEdit->text().toStdString(), protagonistEdit->text().toStdString(), durationEdit->value());
     } else {
         return new Vinile(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
                         copiesEdit->value() > loansEdit->value(), 
-                        30, copiesEdit->value(), loansEdit->value(),
+                        COSTO_VINILE, copiesEdit->value(), loansEdit->value(),
                         artistEdit->text().toStdString(), recordCompanyEdit->text().toStdString(), rpmCombo->currentText().toInt());
     }
 }

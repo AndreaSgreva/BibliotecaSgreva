@@ -42,6 +42,10 @@ public:
     bool aggiornaFields(Biblioteca* item);
     bool aggiornaSpecificFields(Biblioteca* item);
 
+    static const double COSTO_LIBRO;
+    static const double COSTO_FILM;
+    static const double COSTO_VINILE;
+
 signals:
     void itemCreated(Biblioteca* newItem);
     void itemUpdated(Biblioteca* updatedItem);
@@ -89,6 +93,8 @@ private:
     QComboBox* typeSelector;
     QPushButton* saveButton;
     QPushButton* backButton;
+
+
 };
 
 #endif // EDITCREATEPAGE_H
