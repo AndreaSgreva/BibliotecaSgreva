@@ -1,5 +1,3 @@
-- SISTEMA MODIFICA
-- CONTROLLA POLIMORFISMO SHOWOGGETTO (FILTRI,ECC,...)
 - controlla metodi, tipo notificaObservers() senza parametri è un metodo di istanza (?)
 - SERVE COPIA PROFONDA O QT FA DA SOLO? Vedi Json::modificaOggetto(Biblioteca* oggetto)
 - VA FATTO UN CREATE E MODIFICA PER OGNI OGGETTO E POI GESTITO CON POLIMORFISMO?
@@ -9,19 +7,8 @@
 - colonne e righe vanno messe in maniera statica?
 - lasciamo questo layout con questa finestra o facciamo dinamico?
 
-- CONTROLLA METODI CLASSE JSON, molte ripetizioni e modifiche del tipo:
-if (file.write(QJsonDocument(jsonArray).toJson()) != -1) {
-        file.close();
-        notificaObservers(); // Notifica gli observer dopo l'aggiornamento
-        return true;
-    }
-    file.close();
-    return false;
+
 
 [] mantenuto metodo showAll() per non effetturare check inutili --> ha senso (?)
 
-
-
-
-appena modificato AdminPage::eliminaOggetto(...) 11:15
 

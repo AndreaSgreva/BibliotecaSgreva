@@ -325,20 +325,17 @@ void EditCreatePage::saveItem() {
 Biblioteca* EditCreatePage::createNewItem() {
     if(currentType == "Libro") {
         return new Libro(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(), 
-                        genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
-                        copiesEdit->value() > loansEdit->value(), 
+                        genreEdit->text().toStdString(), languageCombo->currentText().toStdString(), true, 
                         COSTO_LIBRO, copiesEdit->value(), loansEdit->value(),
                         authorEdit->text().toStdString(), pagesEdit->value(), isbnEdit->text().toStdString());
     } else if(currentType == "Film") {
         return new Film(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
-                        genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
-                        copiesEdit->value() > loansEdit->value(), 
+                        genreEdit->text().toStdString(), languageCombo->currentText().toStdString(), true, 
                         COSTO_FILM, copiesEdit->value(), loansEdit->value(),
                         directorEdit->text().toStdString(), protagonistEdit->text().toStdString(), durationEdit->value());
     } else {
         return new Vinile(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
-                        genreEdit->text().toStdString(), languageCombo->currentText().toStdString(),
-                        copiesEdit->value() > loansEdit->value(), 
+                        genreEdit->text().toStdString(), languageCombo->currentText().toStdString(), true, 
                         COSTO_VINILE, copiesEdit->value(), loansEdit->value(),
                         artistEdit->text().toStdString(), recordCompanyEdit->text().toStdString(), rpmCombo->currentText().toInt());
     }
@@ -355,7 +352,7 @@ void EditCreatePage::cleanLayout() {
         if (item->widget()) {
             item->widget()->deleteLater();
         }
-        delete item;
+        delete item;  // Sicuro se non ha widget (Qt gestisce i widget con deleteLater)
     }
 
     
@@ -369,6 +366,7 @@ void EditCreatePage::cleanLayout() {
     languageCombo = nullptr;
     copiesEdit = nullptr;
     loansEdit = nullptr;
+    costLabel = nullptr;
 
     authorEdit = nullptr;
     pagesEdit = nullptr;
