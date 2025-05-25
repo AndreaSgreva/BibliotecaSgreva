@@ -46,6 +46,8 @@ void PageVisitor::visit(Biblioteca *biblioteca){
         imageLabel->setAlignment(Qt::AlignCenter);
         imageLabel->setStyleSheet("color: gray;");
     }
+    imageLabel->setFixedSize(160, 160);
+    imageLabel->setAlignment(Qt::AlignCenter);
 
     // Layout per centrare l'immagine
     QHBoxLayout *imageLayout = new QHBoxLayout();
