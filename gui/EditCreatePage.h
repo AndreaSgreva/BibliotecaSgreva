@@ -82,10 +82,13 @@ private:
     QLineEdit* recordCompanyEdit;
     QComboBox* rpmCombo;
 
-    //per immagine
     QLineEdit* imagePathEdit;
     QPushButton* browseImageButton;
     QLabel* imagePreview;
+
+    QComboBox* typeSelector;
+    QPushButton* saveButton;
+    QPushButton* backButton;
 };
 
 #endif // EDITCREATEPAGE_H

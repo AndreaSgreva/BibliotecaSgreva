@@ -72,6 +72,12 @@ UserPage::UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidge
     labelPrestiti->setAlignment(Qt::AlignCenter);
     labelPrestiti->setStyleSheet("font-size: 18px;");
     userLayout->addWidget(labelPrestiti);
+
+    backButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
+    filterButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
+    searchButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
+    exitButton->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
+    searchBar->setStyleSheet("background-color: rgb(255, 255, 255); color:rgb(0, 0, 0);");
     
     // Imposta il layout principale
     setLayout(userLayout);
@@ -325,6 +331,9 @@ void UserPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColum
     frame->setMaximumSize(365, 445);  // Larghezza e altezza massime
     frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
+    frame->setStyleSheet("background-color: rgb(175, 238, 238);"); 
+
+
     QVBoxLayout *frameLayout = new QVBoxLayout(frame);
     frameLayout->addWidget(objWidget);
 
@@ -332,6 +341,9 @@ void UserPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColum
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     QPushButton *prenotaButton = new QPushButton("Prenota");
     QPushButton *restituisciButton = new QPushButton("Restituisci");
+
+    prenotaButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(0, 0, 0);");
+    restituisciButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(0, 0, 0);");
 
     // Connetti i pulsanti all'oggetto corrente
     connect(prenotaButton, &QPushButton::clicked, this, [this, obj]() { prenotaOggetto(obj); });

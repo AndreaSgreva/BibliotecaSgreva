@@ -81,6 +81,13 @@ AdminPage::AdminPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwid
     labelPrestiti->setAlignment(Qt::AlignCenter);
     labelPrestiti->setStyleSheet("font-size: 18px;");
     adminLayout->addWidget(labelPrestiti);
+
+    backButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    filterButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    searchButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    searchBar->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    createButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
     // Imposta il layout principale
     setLayout(adminLayout);
@@ -343,6 +350,8 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
     frame->setMaximumSize(365, 445);  
     frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
+    frame->setStyleSheet("background-color: rgb(175, 238, 238);");
+
     QVBoxLayout *frameLayout = new QVBoxLayout(frame);
     frameLayout->addWidget(objWidget);
 
@@ -354,6 +363,11 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
     // Pulsanti che ha solo admin NUOVO
     QPushButton *modificaButton = new QPushButton("Modifica");
     QPushButton *eliminaButton = new QPushButton("Elimina");
+
+    eliminaButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(213, 9, 9);");
+    modificaButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(0, 0, 0);");
+    prenotaButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(0, 0, 0);");
+    restituisciButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(0, 0, 0);");
 
     // Connetti i pulsanti all'oggetto corrente
     connect(prenotaButton, &QPushButton::clicked, this, [this, obj]() { prenotaOggetto(obj); });
@@ -369,6 +383,8 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
     // NUOVI
     buttonLayout->addWidget(modificaButton);
     buttonLayout->addWidget(eliminaButton);
+
+    
 
     // Aggiunta del layout orizzontale al frameLayout
     frameLayout->addLayout(buttonLayout);

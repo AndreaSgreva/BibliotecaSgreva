@@ -11,6 +11,8 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
     setWindowTitle("Accesso");
     setMinimumSize(1000, 800);
 
+    stackedwidget->setStyleSheet("background-color: rgb(104, 193, 225);"); 
+
     // Schermata principale con due sezioni: Admin e Utente
     QWidget *loginWidget = new QWidget(this);
     QVBoxLayout *loginLayout = new QVBoxLayout(loginWidget);
@@ -90,6 +92,10 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
     loginLayout->setAlignment(Qt::AlignCenter);
 
     setCentralWidget(loginWidget);
+
+    loginWidget->setStyleSheet("background-color: rgb(104, 193, 225);"); 
+    //userWidget->setStyleSheet("background-color: rgb(175, 238, 238);"); 
+    //adminWidget->setStyleSheet("background-color: rgb(175, 238, 238);"); 
 }
 
 // Metodo per gestire l'accesso come Admin

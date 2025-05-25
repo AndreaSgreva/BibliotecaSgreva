@@ -10,22 +10,62 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     mainLayout = new QVBoxLayout(this);
     formLayout = new QFormLayout();
 
+    // Menu a tendina per selezionare il tipo
+    typeSelector = new QComboBox();
+    typeSelector->addItem("Seleziona tipo...");
+    typeSelector->addItem("Libro");
+    typeSelector->addItem("Film");
+    typeSelector->addItem("Vinile");
+
+    typeSelector->setMinimumWidth(200);
+    typeSelector->setFixedHeight(40);
+
+    typeSelector->setStyleSheet("font-size: 16px; font-weight: bold; color:rgb(19, 64, 110);");
+
+
+    mainLayout->addWidget(typeSelector);
+
     mainLayout->addLayout(formLayout);
     
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    QPushButton* saveButton = new QPushButton("Salva");
-    QPushButton* backButton = new QPushButton("Indietro");
+    saveButton = new QPushButton("Salva");
+    backButton = new QPushButton("Indietro");
     
     connect(saveButton, &QPushButton::clicked, this, &EditCreatePage::saveItem);
     connect(backButton, &QPushButton::clicked, this, &EditCreatePage::goBack);
     
     buttonLayout->addWidget(saveButton);
     buttonLayout->addWidget(backButton);
-    
     mainLayout->addLayout(buttonLayout);
+
+    // Reagisci alla selezione
+    connect(typeSelector, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        if (index == 0) {
+            saveButton->setEnabled(false);
+            cleanLayout();
+            return;
+        }
+
+        saveButton->setEnabled(true);
+        cleanLayout();
+        currentType = typeSelector->currentText();
+        setupCommonFields();
+
+        if (currentType == "Libro") setupBookFields();
+        else if (currentType == "Film") setupFilmFields();
+        else if (currentType == "Vinile") setupVinileFields();
+    });
 }
 
 void EditCreatePage::setupForCreation() {
+    currentMode = Create;
+    currentItem = nullptr;
+    typeSelector->setCurrentIndex(0);
+    saveButton->setEnabled(false);
+    cleanLayout();
+}
+
+/*void EditCreatePage::setupForCreation() {
     currentMode = Create;
     currentItem = nullptr;
     cleanLayout();
@@ -65,7 +105,7 @@ void EditCreatePage::setupForCreation() {
     });
     
     typeDialog.exec();
-}
+}*/
 
 void EditCreatePage::setupForEditing(Biblioteca* item) {
     currentMode = Edit;
