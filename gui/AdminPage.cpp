@@ -75,7 +75,7 @@ AdminPage::AdminPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwid
     scrollArea->setWidget(contentWidget);
     adminLayout->addWidget(scrollArea);  // Aggiunta al layout principale
 
-    //Testo centrale che mostra prestiti totali
+    //Testo centrale che mostra prestiti totali della biblioteca
     labelPrestiti = new QLabel("Prestiti totali: " + QString::number(showTotPrestiti()));
     labelPrestiti->setAlignment(Qt::AlignCenter);
     labelPrestiti->setStyleSheet("font-size: 18px;");

@@ -42,10 +42,6 @@ public:
     bool aggiornaFields(Biblioteca* item);
     bool aggiornaSpecificFields(Biblioteca* item);
 
-    static const double COSTO_LIBRO;
-    static const double COSTO_FILM;
-    static const double COSTO_VINILE;
-
 signals:
     void itemCreated(Biblioteca* newItem);
     void itemUpdated(Biblioteca* updatedItem);
@@ -93,7 +89,10 @@ private:
     QPushButton* saveButton;
     QPushButton* backButton;
 
-
+    static const double COSTO_LIBRO;
+    static const double COSTO_FILM;
+    static const double COSTO_VINILE;
+    static const QString fieldStyle;
 };
 
 #endif // EDITCREATEPAGE_H

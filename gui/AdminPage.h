@@ -5,6 +5,7 @@
 #include "../modello_logico/Libro.h"
 #include "../modello_logico/Film.h"
 #include "../modello_logico/Vinile.h"   
+#include "../jsonHandler/JsonObserver.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -14,9 +15,6 @@
 #include <QScrollArea>
 #include <QRadioButton> 
 #include <QGridLayout>  
-
-//NUOVO
-#include "../jsonHandler/JsonObserver.h"
 
 class AdminPage : public QWidget, public JsonObserver {
     Q_OBJECT

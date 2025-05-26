@@ -185,22 +185,19 @@ bool Json::aggiungiOggetto(Biblioteca* oggetto) {
     newObj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
 
     // Inserimento delle informazioni specifiche
-    if (typeid(*oggetto) == typeid(Libro)) {
-        Libro* libro = static_cast<Libro*>(oggetto);
+    if (Libro* libro = dynamic_cast<Libro*>(oggetto)) {
         newObj["classe"] = "libro";
         newObj["autore"] = QString::fromStdString(libro->getAutore());
         newObj["pagine"] = libro->getPagine();
         newObj["isbn"] = QString::fromStdString(libro->getISBN());
     }
-    else if (typeid(*oggetto) == typeid(Film)) {
-        Film* film = static_cast<Film*>(oggetto);
+    else if (Film* film = dynamic_cast<Film*>(oggetto)) {
         newObj["classe"] = "film";
         newObj["regista"] = QString::fromStdString(film->getRegista());
         newObj["protagonisti"] = QString::fromStdString(film->getProtagonista());
         newObj["durata"] = film->getDurata();
     }
-    else if (typeid(*oggetto) == typeid(Vinile)) {
-        Vinile* vinile = static_cast<Vinile*>(oggetto);
+    else if (Vinile* vinile = dynamic_cast<Vinile*>(oggetto)) {
         newObj["classe"] = "vinile";
         newObj["artista"] = QString::fromStdString(vinile->getArtista());
         newObj["casaDiscografica"] = QString::fromStdString(vinile->getCasaDiscografica());
@@ -253,22 +250,19 @@ bool Json::modificaOggetto(Biblioteca* oggetto) {
     obj["numeroPrestiti"] = oggetto->getNumeroPrestiti();
 
     // Inserimento delle informazioni specifiche
-    if (typeid(*oggetto) == typeid(Libro)) {
-        Libro* libro = static_cast<Libro*>(oggetto);
+    if (Libro* libro = dynamic_cast<Libro*>(oggetto)) {
         obj["classe"] = "libro";
         obj["autore"] = QString::fromStdString(libro->getAutore());
         obj["pagine"] = libro->getPagine();
         obj["isbn"] = QString::fromStdString(libro->getISBN());
     }
-    else if (typeid(*oggetto) == typeid(Film)) {
-        Film* film = static_cast<Film*>(oggetto);
+    else if (Film* film = dynamic_cast<Film*>(oggetto)) {
         obj["classe"] = "film";
         obj["regista"] = QString::fromStdString(film->getRegista());
         obj["protagonisti"] = QString::fromStdString(film->getProtagonista());
         obj["durata"] = film->getDurata();
     }
-    else if (typeid(*oggetto) == typeid(Vinile)) {
-        Vinile* vinile = static_cast<Vinile*>(oggetto);
+    else if (Vinile* vinile = dynamic_cast<Vinile*>(oggetto)) {
         obj["classe"] = "vinile";
         obj["artista"] = QString::fromStdString(vinile->getArtista());
         obj["casaDiscografica"] = QString::fromStdString(vinile->getCasaDiscografica());
@@ -294,21 +288,8 @@ bool Json::modificaOggetto(Biblioteca* oggetto) {
         return true;
     }
 
-    /*if (file.write(QJsonDocument(jsonArray).toJson()) != -1) {
-        int index = findIndex(oggetto);
-        if (index != -1) {
-            delete biblioteca[index]; // Dealloca il vecchio oggetto
-            biblioteca[index] = oggetto; // Sostituisci con quello nuovo
-        }
-        file.close();
-        notificaObservers(); // Notifica gli observer dopo la modifica
-        return true;
-    }*/
     file.close();
     return false;
-    /*file.write(QJsonDocument(jsonArray).toJson());
-    file.close();
-    return true;*/
 }
 
 // Metodo per aggiungere un observer

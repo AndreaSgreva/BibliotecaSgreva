@@ -7,6 +7,8 @@
 const double EditCreatePage::COSTO_LIBRO = 1.5;
 const double EditCreatePage::COSTO_FILM = 2.5;
 const double EditCreatePage::COSTO_VINILE = 4.0;
+const QString EditCreatePage::fieldStyle = "background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);";
+
 
 EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent) 
     : QWidget(parent), stack(stackedWidget), currentItem(nullptr) {
@@ -24,7 +26,7 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     typeSelector->setMinimumWidth(200);
     typeSelector->setFixedHeight(40);
 
-    typeSelector->setStyleSheet("background-color: rgb(175, 238, 238); font-size: 16px; font-weight: bold; color:rgb(19, 64, 110);");
+    typeSelector->setStyleSheet(fieldStyle);
 
     mainLayout->addWidget(typeSelector);
     mainLayout->addLayout(formLayout);
@@ -33,8 +35,8 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     saveButton = new QPushButton("Salva");
     backButton = new QPushButton("Indietro");
 
-    backButton->setStyleSheet("background-color: rgb(175, 238, 238); font-weight: bold; color:rgb(0, 0, 0);");
-    saveButton->setStyleSheet("background-color: rgb(175, 238, 238); font-weight: bold; color:rgb(0, 0, 0);");
+    backButton->setStyleSheet(fieldStyle);
+    saveButton->setStyleSheet(fieldStyle);
     
     connect(saveButton, &QPushButton::clicked, this, &EditCreatePage::saveItem);
     connect(backButton, &QPushButton::clicked, this, &EditCreatePage::goBack);
@@ -157,15 +159,15 @@ void EditCreatePage::setupCommonFields() {
         }   
     });
 
-    imagePathEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    browseImageButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    titleEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    yearEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    genreEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    languageCombo->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    costLabel->setStyleSheet("background-color: rgb(175, 238, 238); border: 1px solid #9c9c9c; color:rgb(0, 0, 0);");
-    copiesEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    loansEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    imagePathEdit->setStyleSheet(fieldStyle);
+    browseImageButton->setStyleSheet(fieldStyle);
+    titleEdit->setStyleSheet(fieldStyle);
+    yearEdit->setStyleSheet(fieldStyle);
+    genreEdit->setStyleSheet(fieldStyle);
+    languageCombo->setStyleSheet(fieldStyle);
+    costLabel->setStyleSheet(fieldStyle);
+    copiesEdit->setStyleSheet(fieldStyle);
+    loansEdit->setStyleSheet(fieldStyle);
 
     formLayout->addRow("Immagine:", imagePathEdit);
     formLayout->addWidget(browseImageButton);
@@ -189,9 +191,9 @@ void EditCreatePage::setupBookFields(Libro* libro) {
 
     costLabel->setText(QString::number(COSTO_LIBRO));
 
-    authorEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    pagesEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    isbnEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    authorEdit->setStyleSheet(fieldStyle);
+    pagesEdit->setStyleSheet(fieldStyle);
+    isbnEdit->setStyleSheet(fieldStyle);
     
     formLayout->addRow("Autore:", authorEdit);
     formLayout->addRow("Pagine:", pagesEdit);
@@ -208,9 +210,9 @@ void EditCreatePage::setupFilmFields(Film* film) {
     durationEdit->setRange(1, 300);
     durationEdit->setValue(film ? film->getDurata() : 120);
 
-    directorEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    protagonistEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    durationEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    directorEdit->setStyleSheet(fieldStyle);
+    protagonistEdit->setStyleSheet(fieldStyle);
+    durationEdit->setStyleSheet(fieldStyle);
     
     formLayout->addRow("Regista:", directorEdit);
     formLayout->addRow("Protagonista:", protagonistEdit);
@@ -230,9 +232,9 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
         if (index >= 0) rpmCombo->setCurrentIndex(index);
     }
 
-    artistEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    recordCompanyEdit->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    rpmCombo->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    artistEdit->setStyleSheet(fieldStyle);
+    recordCompanyEdit->setStyleSheet(fieldStyle);
+    rpmCombo->setStyleSheet(fieldStyle);
     
     formLayout->addRow("Artista:", artistEdit);
     formLayout->addRow("Casa discografica:", recordCompanyEdit);
