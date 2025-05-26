@@ -26,9 +26,7 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
 
     typeSelector->setStyleSheet("background-color: rgb(175, 238, 238); font-size: 16px; font-weight: bold; color:rgb(19, 64, 110);");
 
-
     mainLayout->addWidget(typeSelector);
-
     mainLayout->addLayout(formLayout);
     
     QHBoxLayout* buttonLayout = new QHBoxLayout();
@@ -355,7 +353,6 @@ void EditCreatePage::cleanLayout() {
         delete item;  // Sicuro se non ha widget (Qt gestisce i widget con deleteLater)
     }
 
-    
     // Azzera i puntatori per evitare accessi a memoria invalidata
     imagePathEdit = nullptr;
     browseImageButton = nullptr;

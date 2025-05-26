@@ -4,7 +4,7 @@
 using namespace std;
 
 //costruttore e distruttore
-Biblioteca::Biblioteca(string image,string title, int year, string genre, string language, bool available, 
+Biblioteca::Biblioteca(const string& image, const string& title, int year, const string& genre, const string& language, bool available, 
     double cost, int numberCopies, int numberLoans) : immagine(image), titolo(title), anno(year), genere(genre), 
     lingua(language), disponibile(available), costo(cost), numeroCopie(numberCopies < 1 ? 1 : numberCopies), 
     numeroPrestiti(numberLoans < 0 ? 0 : numberLoans) {}

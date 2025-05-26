@@ -15,7 +15,7 @@ class PageVisitor : public Visitor {
     public:
         PageVisitor();
         void visit(Biblioteca *biblioteca);
-        void visit(Libro *libro) override;  //BISOGNA METTERE OVERRIDE???
+        void visit(Libro *libro) override; 
         void visit(Film *film) override;
         void visit(Vinile *vinile) override;
         QWidget* getObjectWidget() const;

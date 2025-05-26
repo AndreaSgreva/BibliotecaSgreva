@@ -4,8 +4,8 @@
 using namespace std;
 
 //costruttore
-Libro::Libro(string image, string title, int year, string genre, string language, bool available, double cost, 
-    int numberCopies, int numberLoans,string autor, int pages, string code) : Biblioteca(image, title, year, genre, 
+Libro::Libro(const string& image, const string& title, int year, const string& genre, const string& language, bool available, double cost, 
+    int numberCopies, int numberLoans, const string& autor, int pages, const string& code) : Biblioteca(image, title, year, genre, 
         language, available, cost, numberCopies, numberLoans), autore(autor), pagine(pages), isbn(code){}
 
 //getters

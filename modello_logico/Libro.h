@@ -12,8 +12,8 @@ class Libro : public Biblioteca {
         string isbn;
     public:
         //costruttore
-        Libro(string image, string title, int year, string genre, string language, bool available, double cost, 
-            int numberCopies, int numberLoans, string autor, int pages, string code);
+        Libro(const string& image, const string& title, int year, const string& genre, const string& language, bool available, double cost, 
+            int numberCopies, int numberLoans, const string& autor, int pages, const string& code);
 
         //getters
         string getAutore() const;

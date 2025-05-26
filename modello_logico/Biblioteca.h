@@ -18,7 +18,7 @@ class Biblioteca{
         int numeroPrestiti;
     public:
         //costruttore e distruttore
-        Biblioteca(string image, string title, int year, string genre, string language, bool available, double cost, 
+        Biblioteca(const string& image, const string& title, int year, const string& genre, const string& language, bool available, double cost, 
             int numberCopies, int numberLoans);
         virtual ~Biblioteca() = default;
 

@@ -89,7 +89,7 @@ AdminPage::AdminPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwid
     createButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
     // Imposta il layout principale
-    setLayout(adminLayout);
+    //setLayout(adminLayout); Dovrebbe essere già impostato
     showAll();
 }
 
@@ -141,41 +141,41 @@ void AdminPage::create(){
 
 // Metodo per i filtri
 void AdminPage::filter() {
-    QDialog *dialog = new QDialog(this);
-    dialog->setWindowTitle("Filtra gli oggetti");
-    dialog->setMinimumSize(300, 180);
-    QVBoxLayout *dialogLayout = new QVBoxLayout(dialog);
+    QDialog dialog(this);
+    dialog.setWindowTitle("Filtra gli oggetti");
+    dialog.setMinimumSize(300, 180);
+    QVBoxLayout *dialogLayout = new QVBoxLayout(&dialog);
 
     // Titolo in grassetto per "Categoria"
-    QLabel *categoryLabel = new QLabel("Seleziona una categoria", dialog);
+    QLabel *categoryLabel = new QLabel("Seleziona una categoria", &dialog);
     categoryLabel->setStyleSheet("font-weight: bold;");
 
     // Creazione dei radio button per categoria
-    allCategoryRadioButton = new QRadioButton("Tutte le categorie", dialog);
-    libroRadioButton = new QRadioButton("Libro", dialog);
-    vinileRadioButton = new QRadioButton("Vinile", dialog);
-    filmRadioButton = new QRadioButton("Film", dialog);
+    allCategoryRadioButton = new QRadioButton("Tutte le categorie", &dialog);
+    libroRadioButton = new QRadioButton("Libro", &dialog);
+    vinileRadioButton = new QRadioButton("Vinile", &dialog);
+    filmRadioButton = new QRadioButton("Film", &dialog);
 
     // Titolo in grassetto per "Lingua"
-    QLabel *linguaLabel = new QLabel("Seleziona una lingua", dialog);
+    QLabel *linguaLabel = new QLabel("Seleziona una lingua", &dialog);
     linguaLabel->setStyleSheet("font-weight: bold;");
 
     // Creazione dei radio button per lingua
-    allLinguaRadioButton = new QRadioButton("Tutte le lingue", dialog);
-    italianoRadioButton = new QRadioButton("Italiano", dialog);
-    ingleseRadioButton = new QRadioButton("Inglese", dialog);
-    spagnoloRadioButton = new QRadioButton("Spagnolo", dialog);
+    allLinguaRadioButton = new QRadioButton("Tutte le lingue", &dialog);
+    italianoRadioButton = new QRadioButton("Italiano", &dialog);
+    ingleseRadioButton = new QRadioButton("Inglese", &dialog);
+    spagnoloRadioButton = new QRadioButton("Spagnolo", &dialog);
 
     // Raggruppiamo i radio button in un QButtonGroup per forzare la selezione unica
     // Gruppo categoria
-    QButtonGroup *categoryGroup = new QButtonGroup(dialog);
+    QButtonGroup *categoryGroup = new QButtonGroup(&dialog);
     categoryGroup->addButton(allCategoryRadioButton);
     categoryGroup->addButton(libroRadioButton);
     categoryGroup->addButton(vinileRadioButton);
     categoryGroup->addButton(filmRadioButton);
 
     // Gruppo lingua
-    QButtonGroup *linguaGroup = new QButtonGroup(dialog);
+    QButtonGroup *linguaGroup = new QButtonGroup(&dialog);
     linguaGroup->addButton(allLinguaRadioButton);
     linguaGroup->addButton(italianoRadioButton);
     linguaGroup->addButton(ingleseRadioButton);
@@ -185,8 +185,8 @@ void AdminPage::filter() {
     allCategoryRadioButton->setChecked(true);
     allLinguaRadioButton->setChecked(true);
 
-    QPushButton *applyButton = new QPushButton("Applica", dialog);
-    connect(applyButton, &QPushButton::clicked, dialog, &QDialog::accept);
+    QPushButton *applyButton = new QPushButton("Applica", &dialog);
+    connect(applyButton, &QPushButton::clicked, &dialog, &QDialog::accept);
 
     // Aggiunta dei radio button al layout
     dialogLayout->addWidget(categoryLabel);
@@ -201,10 +201,8 @@ void AdminPage::filter() {
     dialogLayout->addWidget(spagnoloRadioButton);
     dialogLayout->addWidget(applyButton);
 
-    if (dialog->exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted) {
         cleanLayout();
-
-        // Mostriamo gli elementi in base alla selezione
         if (allCategoryRadioButton->isChecked() && allLinguaRadioButton->isChecked()) showAll();
         else showOggetto();
     }
@@ -215,8 +213,9 @@ void AdminPage::cleanLayout() {
     // Pulizia layout precedente 
     QLayoutItem *item;
     while ((item = contentLayout->takeAt(0)) != nullptr) {
-        //delete item->widget();
-        item->widget()->deleteLater();  //prova chat gpt
+        if (QWidget *w = item->widget()){
+            w->deleteLater();
+        }
         delete item;
     }
 }
@@ -309,8 +308,6 @@ void AdminPage::showOggetto() {
     int row = 0, col = 0;  // Per tenere traccia della posizione nella griglia
     int maxColumns = 3;    // Numero massimo di colonne per riga
 
-    QString linguaSelezionata; // Memorizza la lingua selezionata
-
     // Verifica la lingua selezionata tramite i radio button
     if (italianoRadioButton->isChecked()) linguaSelezionata = "italiano";
     else if (ingleseRadioButton->isChecked()) linguaSelezionata = "inglese";
@@ -347,7 +344,7 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
     // Imposta una dimensione fissa per i riquadri
     frame->setMinimumSize(335, 415);  // Larghezza e altezza minime
     frame->setMaximumSize(365, 445);  
-    frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    frame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     frame->setStyleSheet("background-color: rgb(175, 238, 238);");
 
@@ -371,19 +368,14 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
     // Connetti i pulsanti all'oggetto corrente
     connect(prenotaButton, &QPushButton::clicked, this, [this, obj]() { prenotaOggetto(obj); });
     connect(restituisciButton, &QPushButton::clicked, this, [this, obj]() { restituisciOggetto(obj); });
-
-    // NUOVI
     connect(modificaButton, &QPushButton::clicked, this, [this, obj]() { modificaOggetto(obj); });
     connect(eliminaButton, &QPushButton::clicked, this, [this, obj]() { eliminaOggetto(obj); });
 
     // Aggiunta dei pulsanti al layout orizzontale
     buttonLayout->addWidget(prenotaButton);
     buttonLayout->addWidget(restituisciButton);
-    // NUOVI
     buttonLayout->addWidget(modificaButton);
     buttonLayout->addWidget(eliminaButton);
-
-    
 
     // Aggiunta del layout orizzontale al frameLayout
     frameLayout->addLayout(buttonLayout);
@@ -436,8 +428,7 @@ void AdminPage::onBibliotecaAggiornata(const QList<Biblioteca*>& nuovaLista) {
 }
 
 void AdminPage::refreshUI(){
-    cleanLayout();
-    //QMessageBox::information(this, "Aggiornamento", "Aggiornamento interfaccia...");
+    //cleanLayout(); Chiamato già da showAll
     showAll();
     labelPrestiti->setText("Prestiti totali: " + QString::number(showTotPrestiti()));
 }

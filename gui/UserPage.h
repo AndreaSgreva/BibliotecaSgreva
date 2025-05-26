@@ -42,7 +42,7 @@ private:
     QRadioButton *ingleseRadioButton;
     QRadioButton *spagnoloRadioButton;
 
-    QString *linguaSelezionata;
+    QString linguaSelezionata;
 
 public:
     UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidget, QWidget *parent = nullptr);

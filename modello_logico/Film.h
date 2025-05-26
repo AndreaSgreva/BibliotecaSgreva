@@ -12,8 +12,8 @@ class Film : public Biblioteca {
         int durata;
     public:
         //costruttore
-        Film(string image, string title, int year, string genre, string language, bool available, double cost, 
-            int numberCopies, int numberLoans, string director, string protagonist, int duration);
+        Film(const string& image, const string& title, int year, const string& genre, const string& language, bool available, double cost, 
+            int numberCopies, int numberLoans, const string& director, const string& protagonist, int duration);
         
         //getters
         string getRegista() const;

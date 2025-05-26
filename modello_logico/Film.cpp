@@ -4,8 +4,8 @@
 using namespace std;
 
 //costruttore
-Film::Film(string image, string title, int year, string genre, string language, bool available, double cost, 
-    int numberCopies, int numberLoans, string director, string protagonist, int duration) : Biblioteca(image, title, 
+Film::Film(const string& image, const string& title, int year, const string& genre, const string& language, bool available, double cost, 
+    int numberCopies, int numberLoans, const string& director, const string& protagonist, int duration) : Biblioteca(image, title, 
     year, genre, language, available, cost, numberCopies, numberLoans), regista(director), 
     protagonista(protagonist), durata(duration) {}
 

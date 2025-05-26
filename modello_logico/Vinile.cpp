@@ -4,8 +4,8 @@
 using namespace std;
 
 //costruttore
-Vinile::Vinile(string image, string title, int year, string genre, string language, bool available, double cost, 
-    int numberCopies, int numberLoans, string artist, string recordCompany, int rpm) : Biblioteca(image, title, year, 
+Vinile::Vinile(const string& image, const string& title, int year, const string& genre, const string& language, bool available, double cost, 
+    int numberCopies, int numberLoans, const string& artist, const string& recordCompany, int rpm) : Biblioteca(image, title, year, 
     genre, language, available, cost, numberCopies, numberLoans), artista(artist), 
     casaDiscografica(recordCompany), rpm(rpm) {}
 

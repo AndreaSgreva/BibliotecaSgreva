@@ -12,8 +12,8 @@ class Vinile : public Biblioteca {
         int rpm;
     public:
         //costruttore
-        Vinile(string image, string title, int year, string genre, string language, bool available, double cost, 
-            int numberCopies, int numberLoans, string artist, string recordCompany, int rpm);
+        Vinile(const string& image, const string& title, int year, const string& genre, const string& language, bool available, double cost, 
+            int numberCopies, int numberLoans, const string& artist, const string& recordCompany, int rpm);
 
         //getters
         string getArtista() const;
