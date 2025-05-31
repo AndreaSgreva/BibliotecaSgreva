@@ -1,26 +1,25 @@
-# File di compilazione
+# Build files
 *.o
 *.obj
-*.moc
-*.qrc
-*.rcc
 *.gch
 *.autosave
-
-# File generati da qmake/make
-Makefile*
 *.pro.user
+Makefile*
 .qmake.stash
 .qmake.cache
 
-# Cartelle di build (se usate)
+# Qt generated files
+moc_*
+ui_*
+qrc_*
+
+# Qt Creator local settings
+*.pro.user*
+*.creator.*
+*.user
+
+# Build folders
 build/
 debug/
 release/
 
-# File generati da Qt/MOC
-moc_*.cpp
-moc_*.o
-moc_*.h
-ui_*.h
-qrc_*.cpp
