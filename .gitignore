@@ -1,0 +1,20 @@
+# File di compilazione
+*.o
+*.obj
+*.moc
+*.qrc
+*.rcc
+*.gch
+*.autosave
+
+# File generati da qmake/make
+Makefile*
+*.pro.user
+.qmake.stash
+.qmake.cache
+
+# Cartelle di build (se usate)
+build/
+debug/
+release/
+
