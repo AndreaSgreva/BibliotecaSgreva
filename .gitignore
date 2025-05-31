@@ -18,3 +18,8 @@ build/
 debug/
 release/
 
+# File generati da Qt/MOC
+moc_*.cpp
+moc_*.o
+ui_*.h
+qrc_*.cpp
