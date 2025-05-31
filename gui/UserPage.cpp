@@ -79,8 +79,6 @@ UserPage::UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidge
     exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     searchBar->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
-    // Imposta il layout principale
-    //setLayout(userLayout);  Dovrebbe essere già impostato
     showAll();
 }
 
@@ -107,8 +105,8 @@ void UserPage::search() {
     cleanLayout();
 
     int row = 0, col = 0;  
-    int maxColumns = 3; // Colonne massime
-    bool found = false;  // Per sapere se ci sono risultati
+    int maxColumns = 3;
+    bool found = false; 
 
     for (Biblioteca *obj : lista) {
         QString titolo = QString::fromStdString(obj->getTitolo()).toLower();
@@ -206,9 +204,8 @@ void UserPage::cleanLayout() {
 // Metodo per mostrare tutti gli oggetti
 void UserPage::showAll() {
     cleanLayout();  // Pulisce il layout precedente
-    int row = 0, col = 0;  // Per tenere traccia della posizione nella griglia
-    int maxColumns = 3;    // Numero massimo di colonne per riga
-    // Mostra tutti gli oggetti (libri, vinili, film)
+    int row = 0, col = 0; 
+    int maxColumns = 3;    
     for (Biblioteca *obj : lista) {
         riquadroOggetto(obj, row, col, maxColumns);
     }
@@ -287,9 +284,9 @@ int UserPage::showTotPrestiti() {
 
 // Metodo per mostrare gli oggetti in base al tipo
 void UserPage::showOggetto() {
-    cleanLayout();  // Pulisce il layout precedente
-    int row = 0, col = 0;  // Per tenere traccia della posizione nella griglia
-    int maxColumns = 3;    // Numero massimo di colonne per riga
+    cleanLayout();  
+    int row = 0, col = 0;  
+    int maxColumns = 3;   
 
     // Verifica la lingua selezionata tramite i radio button
     if (italianoRadioButton->isChecked()) linguaSelezionata = "italiano";
@@ -371,7 +368,6 @@ void UserPage::onBibliotecaAggiornata(const QList<Biblioteca*>& nuovaLista) {
 }
 
 void UserPage::refreshUI(){
-    //cleanLayout(); Chiamato già da showAll
     showAll();
     labelPrestiti->setText("Prestiti totali: " + QString::number(showTotPrestiti()));
 }

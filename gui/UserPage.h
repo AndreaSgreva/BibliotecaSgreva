@@ -48,12 +48,8 @@ public:
     void showAll();
     int showTotPrestiti();
     void cleanLayout();
-
-    // Polimorfismo per mostrare gli oggetti
     void showOggetto();
     void riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColumns);
-
-    // NUOVO -
     void onBibliotecaAggiornata(const QList<Biblioteca*>& nuovaLista) override;
     void refreshUI();
 
@@ -66,7 +62,7 @@ private slots:
     void restituisciOggetto(Biblioteca *obj);
 
 signals:
-void itemUpdated(Biblioteca* item);
+    void itemUpdated(Biblioteca* item);
 };
 
 #endif // USERPAGE_H

@@ -2,7 +2,6 @@
 #ifndef VISITOR_H
 #define VISITOR_H
 
-
 class Libro;
 class Film;
 class Vinile;

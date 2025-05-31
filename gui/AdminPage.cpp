@@ -88,8 +88,6 @@ AdminPage::AdminPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwid
     searchBar->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     createButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
     
-    // Imposta il layout principale
-    //setLayout(adminLayout); Dovrebbe essere già impostato
     showAll();
 }
 
@@ -131,10 +129,8 @@ void AdminPage::search() {
     }
 }
 
-//NUOVO - di Admin
 // Metodo per la creazione
 void AdminPage::create(){
-    //QMessageBox::warning(this, "ATTENZIONE", "Non faccio nulla!");
     stack->setCurrentIndex(3);
     emit createItem();
 }
@@ -166,7 +162,6 @@ void AdminPage::filter() {
     ingleseRadioButton = new QRadioButton("Inglese", &dialog);
     spagnoloRadioButton = new QRadioButton("Spagnolo", &dialog);
 
-    // Raggruppiamo i radio button in un QButtonGroup per forzare la selezione unica
     // Gruppo categoria
     QButtonGroup *categoryGroup = new QButtonGroup(&dialog);
     categoryGroup->addButton(allCategoryRadioButton);
@@ -222,10 +217,9 @@ void AdminPage::cleanLayout() {
 
 // Metodo per mostrare tutti gli oggetti
 void AdminPage::showAll() {
-    cleanLayout();  // Pulisce il layout precedente
-    int row = 0, col = 0;  // Per tenere traccia della posizione nella griglia
-    int maxColumns = 3;    // Numero massimo di colonne per riga
-    // Mostra tutti gli oggetti (libri, vinili, film)
+    cleanLayout();  
+    int row = 0, col = 0;  
+    int maxColumns = 3;    
     for (Biblioteca *obj : lista) {
         riquadroOggetto(obj, row, col, maxColumns);
     }
@@ -304,9 +298,9 @@ int AdminPage::showTotPrestiti() {
 
 // Metodo per mostrare gli oggetti in base al tipo
 void AdminPage::showOggetto() {
-    cleanLayout();  // Pulisce il layout precedente
-    int row = 0, col = 0;  // Per tenere traccia della posizione nella griglia
-    int maxColumns = 3;    // Numero massimo di colonne per riga
+    cleanLayout(); 
+    int row = 0, col = 0;  
+    int maxColumns = 3;    
 
     // Verifica la lingua selezionata tramite i radio button
     if (italianoRadioButton->isChecked()) linguaSelezionata = "italiano";
@@ -342,7 +336,7 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
     frame->setFrameShadow(QFrame::Raised);
 
     // Imposta una dimensione fissa per i riquadri
-    frame->setMinimumSize(335, 415);  // Larghezza e altezza minime
+    frame->setMinimumSize(335, 415);  
     frame->setMaximumSize(365, 445);  
     frame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
@@ -391,8 +385,6 @@ void AdminPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColu
     }
 }
 
-// METODI SOLO DI ADMIN
-
 // Metodo per modificare un oggetto
 void AdminPage::modificaOggetto(Biblioteca *obj) {
     if (!obj) {
@@ -428,7 +420,6 @@ void AdminPage::onBibliotecaAggiornata(const QList<Biblioteca*>& nuovaLista) {
 }
 
 void AdminPage::refreshUI(){
-    //cleanLayout(); Chiamato già da showAll
     showAll();
     labelPrestiti->setText("Prestiti totali: " + QString::number(showTotPrestiti()));
 }

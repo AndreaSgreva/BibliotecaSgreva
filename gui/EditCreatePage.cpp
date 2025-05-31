@@ -64,6 +64,7 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     });
 }
 
+// Metodo per impostare la pagina in modalità di creazione
 void EditCreatePage::setupForCreation() {
     currentMode = Create;
     currentItem = nullptr;
@@ -74,6 +75,7 @@ void EditCreatePage::setupForCreation() {
     cleanLayout();
 }
 
+// Metodo per impostare la pagina in modalità di modifica
 void EditCreatePage::setupForEditing(Biblioteca* item) {
     currentMode = Edit;
     currentItem = item;
@@ -96,6 +98,7 @@ void EditCreatePage::visit(Vinile* vinile) {
     setupVinileFields(vinile);
 }
 
+// Metodo per impostare i campi comuni
 void EditCreatePage::setupCommonFields() {
     // Campo per il percorso immagine
     imagePathEdit = new QLineEdit(currentItem ? QString::fromStdString(currentItem->getImmagine()) : "");
@@ -108,7 +111,7 @@ void EditCreatePage::setupCommonFields() {
         }
     });
 
-    // PREVIEW IMMAGINE
+    // Preview immagine
     imagePreview = new QLabel();
     imagePreview->setFixedSize(200, 200);
     imagePreview->setAlignment(Qt::AlignCenter);
@@ -181,6 +184,7 @@ void EditCreatePage::setupCommonFields() {
     formLayout->addRow("Numero Prestiti:", loansEdit);
 }
 
+// Metodo per impostare i campi specifici per il libro
 void EditCreatePage::setupBookFields(Libro* libro) {
     authorEdit = new QLineEdit(libro ? QString::fromStdString(libro->getAutore()) : "");
     pagesEdit = new QSpinBox();
@@ -200,6 +204,7 @@ void EditCreatePage::setupBookFields(Libro* libro) {
     formLayout->addRow("ISBN:", isbnEdit);
 }
 
+// Metodo per impostare i campi specifici per il film
 void EditCreatePage::setupFilmFields(Film* film) {
     directorEdit = new QLineEdit(film ? QString::fromStdString(film->getRegista()) : "");
     protagonistEdit = new QLineEdit(film ? QString::fromStdString(film->getProtagonista()) : "");
@@ -219,6 +224,7 @@ void EditCreatePage::setupFilmFields(Film* film) {
     formLayout->addRow("Durata (min):", durationEdit);
 }
 
+// Metodo per impostare i campi specifici per il vinile
 void EditCreatePage::setupVinileFields(Vinile* vinile) {
     artistEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getArtista()) : "");
     recordCompanyEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getCasaDiscografica()) : "");
@@ -241,6 +247,7 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
     formLayout->addRow("RPM:", rpmCombo);
 }
 
+// Metodo per aggiornare la disponibilità del libro
 void EditCreatePage::aggiornaDisponibilità(Biblioteca* item) {
     if (item->getNumeroPrestiti() == item->getNumeroCopie()) {
         item->setDisponibile(false);
@@ -249,6 +256,7 @@ void EditCreatePage::aggiornaDisponibilità(Biblioteca* item) {
     }
 }
 
+// Metodo per aggiornare tutti i campi comuni
 bool EditCreatePage::aggiornaFields(Biblioteca* item){
     // Validazione dei campi
     if (titleEdit->text().isEmpty() || genreEdit->text().isEmpty()) {
@@ -269,6 +277,7 @@ bool EditCreatePage::aggiornaFields(Biblioteca* item){
     return aggiornaSpecificFields(item);
 }
 
+// Metodo per aggiornare i campi specifici
 bool EditCreatePage::aggiornaSpecificFields(Biblioteca* item) {
     if (auto libro = dynamic_cast<Libro*>(item)) {
         if (authorEdit->text().isEmpty() || isbnEdit->text().isEmpty()) {
@@ -300,6 +309,7 @@ bool EditCreatePage::aggiornaSpecificFields(Biblioteca* item) {
     return true;
 }
 
+// Metodo per salvare l'oggetto
 void EditCreatePage::saveItem() {
     // Creazione o modifica dell'oggetto
     if (currentMode == Create) {  // Modalità creazione
@@ -322,6 +332,7 @@ void EditCreatePage::saveItem() {
     goBack();
 }
 
+// Metodo per creare un nuovo oggetto
 Biblioteca* EditCreatePage::createNewItem() {
     if(currentType == "Libro") {
         return new Libro(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(), 
@@ -341,11 +352,13 @@ Biblioteca* EditCreatePage::createNewItem() {
     }
 }
 
+// Metodo per tornare alla pagina precedente
 void EditCreatePage::goBack() {
     cleanLayout();
     stack->setCurrentIndex(2);
 }
 
+// Metodo per pulire il layout
 void EditCreatePage::cleanLayout() {
     while (formLayout->count() > 0) {
         QLayoutItem* item = formLayout->takeAt(0);

@@ -25,7 +25,6 @@ void PageVisitor::visit(Biblioteca *biblioteca){
 
     // Creazione delle etichette
     QLabel *titleLabel = new QLabel("<b>" + QString::fromStdString(biblioteca->getTitolo()) + "</b>");
-    //titleLabel->setAlignment(Qt::AlignCenter);
     QLabel *yearLabel = new QLabel(QString::number(biblioteca->getAnno()));
     QLabel *genreLabel = new QLabel(QString::fromStdString(biblioteca->getGenere()));
     QLabel *languageLabel = new QLabel(QString::fromStdString(biblioteca->getLingua()));
@@ -33,8 +32,7 @@ void PageVisitor::visit(Biblioteca *biblioteca){
 
     QLabel *avaiableLabel = new QLabel(QString(biblioteca->getDisponibile() ? "Disponibile" : "Non disponibile"));
 
-
-    // **Immagine**
+    // Immagine
     QLabel *imageLabel = new QLabel();
     QString path = QString::fromStdString(biblioteca->getImmagine());
     QPixmap image(path);
@@ -55,7 +53,6 @@ void PageVisitor::visit(Biblioteca *biblioteca){
     imageLayout->addWidget(imageLabel);
     imageLayout->addStretch();
 
-    // Stile
     titleLabel->setStyleSheet("font-size: 16px; color:rgb(19, 64, 110);");
 
     // Aggiunta delle informazioni al form layout
@@ -64,10 +61,7 @@ void PageVisitor::visit(Biblioteca *biblioteca){
     detailsLayout->addRow("Genere:", genreLabel);
     detailsLayout->addRow("Lingua:", languageLabel);
     detailsLayout->addRow("Costo:", costLabel);
-    
     detailsLayout->addRow("Disponibilità:", avaiableLabel);
-
-    //detailsLayout->setAlignment(Qt::AlignCenter);
 
     // Inserimento nel layout principale
     pageLayout->addLayout(imageLayout);

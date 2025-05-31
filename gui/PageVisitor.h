@@ -1,7 +1,6 @@
-//File PageVisitor.h
+// File PageVisitor.h
 #ifndef PAGEVISITOR_H
 #define PAGEVISITOR_H
-//classe per visualizzare gli oggetti presenti nella biblioteca
 #include "Visitor.h"
 #include <QWidget>
 #include <QVBoxLayout>

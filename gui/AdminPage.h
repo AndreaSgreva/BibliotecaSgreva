@@ -25,8 +25,8 @@ private:
     QLabel *labelPrestiti; 
 
     QGridLayout *contentLayout; 
-    QWidget *contentWidget;     //Widget contenitore
-    QScrollArea *scrollArea;    //Area di scorrimento
+    QWidget *contentWidget;     
+    QScrollArea *scrollArea;    
 
     // Radio button per categorie
     QRadioButton *allCategoryRadioButton;
@@ -48,12 +48,8 @@ public:
     void showAll();
     int showTotPrestiti();
     void cleanLayout();
-
-    // Polimorfismo per mostrare gli oggetti
     void showOggetto();
     void riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColumns);
-
-    // NUOVO -
     void onBibliotecaAggiornata(const QList<Biblioteca*>& nuovaLista) override;
     void refreshUI();
 
@@ -64,8 +60,6 @@ private slots:
     void filter();
     void prenotaOggetto(Biblioteca *obj);
     void restituisciOggetto(Biblioteca *obj);
-
-    // NUOVO
     void create();
     void modificaOggetto(Biblioteca *obj); 
     void eliminaOggetto(Biblioteca *obj);

@@ -1,3 +1,4 @@
+// File MainWindow.h
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -5,8 +6,6 @@
 #include <QWidget>
 #include <QStackedWidget>
 #include <QLineEdit>
-//#include "AdminPage.h"
-//#include "UserPage.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT

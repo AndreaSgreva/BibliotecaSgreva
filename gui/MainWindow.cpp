@@ -1,11 +1,10 @@
+// File MainWindow.cpp
 #include "MainWindow.h"
 #include <QMessageBox>
 #include <QApplication>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QLabel>
-#include "AdminPage.h"  //poi toglierai
-#include "UserPage.h"   //poi toglierai
 
 MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWindow(parent), stack(stackedwidget)  {
     setWindowTitle("Accesso");
@@ -92,15 +91,6 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
     loginLayout->setAlignment(Qt::AlignCenter);
 
     setCentralWidget(loginWidget);
-
-    //loginWidget->setStyleSheet("background-color: rgb(104, 193, 225);"); 
-    //userWidget->setStyleSheet("background-color: rgb(175, 238, 238);"); 
-    //adminWidget->setStyleSheet("background-color: rgb(175, 238, 238);"); 
-    //exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    //userAccessButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    //adminLoginButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    //adminUsername->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    //adminPassword->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
 }
 
 // Metodo per gestire l'accesso come Admin
