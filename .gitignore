@@ -21,5 +21,6 @@ release/
 # File generati da Qt/MOC
 moc_*.cpp
 moc_*.o
+moc_*.h
 ui_*.h
 qrc_*.cpp
