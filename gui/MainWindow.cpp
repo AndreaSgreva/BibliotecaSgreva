@@ -8,7 +8,7 @@
 
 MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWindow(parent), stack(stackedwidget)  {
     setWindowTitle("Accesso");
-    setMinimumSize(1000, 800);
+    //setMinimumSize(1000, 800);
 
     stackedwidget->setStyleSheet("background-color: rgb(104, 193, 225);"); 
 
