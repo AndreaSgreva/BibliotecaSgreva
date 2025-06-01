@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     Json *jManager = new Json();
     QString path = QFileDialog::getOpenFileName(nullptr, "Scegli il file .json da cui prendere i dati", 
         "", "Json (*.json)");
-    // Opzionale
+
     if (path.isEmpty()) {
         QMessageBox::critical(nullptr, "Errore", 
             "Nessun file selezionato. L'applicazione verrà chiusa.");
@@ -32,9 +32,6 @@ int main(int argc, char *argv[]) {
     UserPage *userPage = new UserPage(listaOggetti, &stackWidget);
     AdminPage *adminPage = new AdminPage(listaOggetti, &stackWidget);
     EditCreatePage *editCreatePage = new EditCreatePage(&stackWidget);
-
-    // NUOVE CONNESSIONI SPECIFICHE
-
     
     // Connessione per salvare prenotazioni e restituzioni
     QObject::connect(userPage, &UserPage::itemUpdated, jManager, &Json::aggiornaStatoOggetto);
@@ -46,7 +43,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(editCreatePage, &EditCreatePage::itemCreated, jManager, &Json::aggiungiOggetto);
     QObject::connect(editCreatePage, &EditCreatePage::itemUpdated, jManager, &Json::modificaOggetto);
     
-    // NUOVO Observers
+    // Observers
     jManager->aggiungiObserver(userPage);
     jManager->aggiungiObserver(adminPage);
 
@@ -57,6 +54,5 @@ int main(int argc, char *argv[]) {
     stackWidget.addWidget(editCreatePage); //index 3
     stackWidget.show();
 
-    //delete jManager; //serve?
     return app.exec();
 }
