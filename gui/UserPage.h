@@ -41,6 +41,8 @@ private:
     QRadioButton *spagnoloRadioButton;
 
     QString linguaSelezionata;
+    
+    static const QString fieldStyle;
 
 public:
     UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidget, QWidget *parent = nullptr);

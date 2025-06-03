@@ -8,6 +8,8 @@
 #include <QMessageBox> 
 #include <QButtonGroup> 
 
+const QString UserPage::fieldStyle = "background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);";
+
 UserPage::UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidget, QWidget *parent)
     : QWidget(parent), lista(listaOggetti), stack(stackedwidget) {
 
@@ -73,11 +75,11 @@ UserPage::UserPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidge
     labelPrestiti->setStyleSheet("font-size: 18px;");
     userLayout->addWidget(labelPrestiti);
 
-    backButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    filterButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    searchButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
-    searchBar->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);");
+    backButton->setStyleSheet(fieldStyle);
+    filterButton->setStyleSheet(fieldStyle);
+    searchButton->setStyleSheet(fieldStyle);
+    exitButton->setStyleSheet(fieldStyle);
+    searchBar->setStyleSheet(fieldStyle);
     
     showAll();
 }
@@ -337,8 +339,8 @@ void UserPage::riquadroOggetto(Biblioteca *obj, int &row, int &col, int maxColum
     QPushButton *prenotaButton = new QPushButton("Prenota");
     QPushButton *restituisciButton = new QPushButton("Restituisci");
 
-    prenotaButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(0, 0, 0);");
-    restituisciButton->setStyleSheet("background-color: rgb(255, 255, 255); font-weight: bold; color:rgb(0, 0, 0);");
+    prenotaButton->setStyleSheet(fieldStyle);
+    restituisciButton->setStyleSheet(fieldStyle);
 
     // Connetti i pulsanti all'oggetto corrente
     connect(prenotaButton, &QPushButton::clicked, this, [this, obj]() { prenotaOggetto(obj); });

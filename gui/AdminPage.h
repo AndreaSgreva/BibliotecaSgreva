@@ -42,6 +42,8 @@ private:
 
     QString linguaSelezionata;
 
+    static const QString fieldStyle;
+
 public:
     AdminPage(QList<Biblioteca*> listaOggetti, QStackedWidget *stackedwidget, QWidget *parent = nullptr);
     ~AdminPage();
