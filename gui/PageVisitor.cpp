@@ -13,7 +13,8 @@ PageVisitor::PageVisitor() : pageWidget(new QWidget()), pageLayout(new QVBoxLayo
     pageWidget->setLayout(pageLayout);
 }
 
-void PageVisitor::visit(Biblioteca *biblioteca){
+// Metodo che costruisce il layout dei dettagli comuni di un oggetto Biblioteca
+void PageVisitor::buildCommonWidgets(Biblioteca *biblioteca){
     // pulizia
     QLayoutItem *item;
     while ((item = pageLayout->takeAt(0)) != nullptr) {
@@ -68,10 +69,9 @@ void PageVisitor::visit(Biblioteca *biblioteca){
     pageLayout->addLayout(detailsLayout);
 }
 
-// Metodo per visualizzare un Libro (chiama prima Biblioteca e poi aggiunge info specifiche)
+// Metodo che visualizza le informazioni di un oggetto Libro
 void PageVisitor::visit(Libro *libro) {
-    // Chiama il visit di Biblioteca per le info generiche
-    visit(static_cast<Biblioteca*>(libro));
+    buildCommonWidgets(libro);
 
     // Layout per i dettagli specifici
     QFormLayout *bookDetailsLayout = new QFormLayout();
@@ -90,9 +90,9 @@ void PageVisitor::visit(Libro *libro) {
     pageLayout->addLayout(bookDetailsLayout);
 }
 
+// Metodo che visualizza le informazioni di un oggetto Film
 void PageVisitor::visit(Film *film){
-    // Chiama il visit di Biblioteca per le info generiche
-    visit(static_cast<Biblioteca*>(film));
+    buildCommonWidgets(film);
 
     // Layout per i dettagli specifici
     QFormLayout *filmDetailsLayout = new QFormLayout();
@@ -111,9 +111,9 @@ void PageVisitor::visit(Film *film){
     pageLayout->addLayout(filmDetailsLayout);
 }
 
+// Metodo che visualizza le informazioni di un oggetto Vinile
 void PageVisitor::visit(Vinile *vinile){
-    // Chiama il visit di Biblioteca per le info generiche
-    visit(static_cast<Biblioteca*>(vinile));
+    buildCommonWidgets(vinile);
 
     // Layout per i dettagli specifici
     QFormLayout *vinileDetailsLayout = new QFormLayout();
@@ -132,6 +132,7 @@ void PageVisitor::visit(Vinile *vinile){
     pageLayout->addLayout(vinileDetailsLayout);
 }
 
+// Metodo che restituisce il widget con le informazioni costruite
 QWidget* PageVisitor::getObjectWidget() const{
     return pageWidget;
 }

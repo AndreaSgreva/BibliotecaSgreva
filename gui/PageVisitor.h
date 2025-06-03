@@ -11,9 +11,10 @@ class PageVisitor : public Visitor {
     private:
         QWidget *pageWidget;
         QVBoxLayout *pageLayout;
+        void buildCommonWidgets(Biblioteca *biblioteca);
     public:
         PageVisitor();
-        void visit(Biblioteca *biblioteca);
+        //void visit(Biblioteca *biblioteca);
         void visit(Libro *libro) override; 
         void visit(Film *film) override;
         void visit(Vinile *vinile) override;
