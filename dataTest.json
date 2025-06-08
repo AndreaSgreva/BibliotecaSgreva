@@ -257,7 +257,7 @@
     {
         "anno": 2025,
         "classe": "film",
-        "costo": 2.5,
+        "costo": 2.5000000000000004,
         "disponibile": false,
         "durata": 90,
         "genere": "italian brainrot",

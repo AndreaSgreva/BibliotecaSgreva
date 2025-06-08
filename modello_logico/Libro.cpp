@@ -11,13 +11,11 @@ Libro::Libro(const string& image, const string& title, int year, const string& g
 //getters
 string Libro::getAutore() const { return autore; }
 int Libro::getPagine() const { return pagine; }
-//string Libro::getLingua() const { return lingua; }
 string Libro::getISBN() const { return isbn; }
 
 //setters
 void Libro::setAutore(const string& autor) { autore = autor; }
 void Libro::setPagine(const int& pages) { pagine = pages; }
-//void Libro::setLingua(const string& language) { lingua = language; }
 void Libro::setISBN(const string& code) { isbn = code; }
 
 //metodi

@@ -65,8 +65,7 @@ private:
     QLineEdit* genreEdit;
     QComboBox* languageCombo;
 
-    QLabel* costLabel;
-
+    QDoubleSpinBox* costEdit;
     QSpinBox* copiesEdit;
     QSpinBox* loansEdit;
     
@@ -90,9 +89,6 @@ private:
     QPushButton* saveButton;
     QPushButton* backButton;
 
-    static const double COSTO_LIBRO;
-    static const double COSTO_FILM;
-    static const double COSTO_VINILE;
     static const QString fieldStyle;
 };
 

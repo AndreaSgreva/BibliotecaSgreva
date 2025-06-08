@@ -4,11 +4,7 @@
 #include <QDate>
 #include <QFileDialog>
 
-const double EditCreatePage::COSTO_LIBRO = 1.5;
-const double EditCreatePage::COSTO_FILM = 2.5;
-const double EditCreatePage::COSTO_VINILE = 4.0;
 const QString EditCreatePage::fieldStyle = "background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);";
-
 
 EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent) 
     : QWidget(parent), stack(stackedWidget), currentItem(nullptr) {
@@ -26,7 +22,7 @@ EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent)
     typeSelector->setMinimumWidth(200);
     typeSelector->setFixedHeight(40);
 
-    typeSelector->setStyleSheet(fieldStyle);
+    typeSelector->setStyleSheet("background-color: rgb(175, 238, 238); font-weight: bold; font-size: 20px; color:rgb(7, 35, 161);");
 
     mainLayout->addWidget(typeSelector);
     mainLayout->addLayout(formLayout);
@@ -142,8 +138,12 @@ void EditCreatePage::setupCommonFields() {
         if(index >= 0) languageCombo->setCurrentIndex(index);
     }
     
-    costLabel = new QLabel("");   
-    costLabel->setMinimumHeight(20);
+    costEdit = new QDoubleSpinBox();
+    costEdit->setRange(0.0, 10.0);     // max 10 euro min 10 centesimi
+    costEdit->setSingleStep(0.10);     // passo di 10 centesimi
+    costEdit->setDecimals(2);          // visualizza 2 cifre decimali
+
+
     copiesEdit = new QSpinBox();
     copiesEdit->setRange(1, 100);
     copiesEdit->setValue(currentItem ? currentItem->getNumeroCopie() : 1);
@@ -168,7 +168,7 @@ void EditCreatePage::setupCommonFields() {
     yearEdit->setStyleSheet(fieldStyle);
     genreEdit->setStyleSheet(fieldStyle);
     languageCombo->setStyleSheet(fieldStyle);
-    costLabel->setStyleSheet(fieldStyle);
+    costEdit->setStyleSheet(fieldStyle);
     copiesEdit->setStyleSheet(fieldStyle);
     loansEdit->setStyleSheet(fieldStyle);
 
@@ -179,7 +179,7 @@ void EditCreatePage::setupCommonFields() {
     formLayout->addRow("Anno:", yearEdit);
     formLayout->addRow("Genere:", genreEdit);
     formLayout->addRow("Lingua:", languageCombo);
-    formLayout->addRow("Costo (€):", costLabel);
+    formLayout->addRow("Costo (€):", costEdit);
     formLayout->addRow("Numero Copie:", copiesEdit);
     formLayout->addRow("Numero Prestiti:", loansEdit);
 }
@@ -193,7 +193,7 @@ void EditCreatePage::setupBookFields(Libro* libro) {
     
     isbnEdit = new QLineEdit(libro ? QString::fromStdString(libro->getISBN()) : "");
 
-    costLabel->setText(QString::number(COSTO_LIBRO));
+    costEdit->setValue(currentItem ? currentItem->getCosto() : 1.50);
 
     authorEdit->setStyleSheet(fieldStyle);
     pagesEdit->setStyleSheet(fieldStyle);
@@ -209,7 +209,8 @@ void EditCreatePage::setupFilmFields(Film* film) {
     directorEdit = new QLineEdit(film ? QString::fromStdString(film->getRegista()) : "");
     protagonistEdit = new QLineEdit(film ? QString::fromStdString(film->getProtagonista()) : "");
     
-    costLabel->setText(QString::number(COSTO_FILM));   
+    //costLabel->setText(QString::number(COSTO_FILM));   
+    costEdit->setValue(currentItem ? currentItem->getCosto() : 2.50);
 
     durationEdit = new QSpinBox();
     durationEdit->setRange(1, 300);
@@ -229,7 +230,7 @@ void EditCreatePage::setupVinileFields(Vinile* vinile) {
     artistEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getArtista()) : "");
     recordCompanyEdit = new QLineEdit(vinile ? QString::fromStdString(vinile->getCasaDiscografica()) : "");
     
-    costLabel->setText(QString::number(COSTO_VINILE));
+    costEdit->setValue(currentItem ? currentItem->getCosto() : 4.00);
 
     rpmCombo = new QComboBox();
     rpmCombo->addItems({"33", "45"});
@@ -274,6 +275,7 @@ bool EditCreatePage::aggiornaFields(Biblioteca* item){
     item->setNumeroCopie(copiesEdit->value());
     item->setNumeroPrestiti(loansEdit->value());
     item->setImmagine(imagePathEdit->text().toStdString());
+    item->setCosto(costEdit->value());
     return aggiornaSpecificFields(item);
 }
 
@@ -337,17 +339,17 @@ Biblioteca* EditCreatePage::createNewItem() {
     if(currentType == "Libro") {
         return new Libro(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(), 
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(), true, 
-                        COSTO_LIBRO, copiesEdit->value(), loansEdit->value(),
+                        costEdit->value(), copiesEdit->value(), loansEdit->value(),
                         authorEdit->text().toStdString(), pagesEdit->value(), isbnEdit->text().toStdString());
     } else if(currentType == "Film") {
         return new Film(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(), true, 
-                        COSTO_FILM, copiesEdit->value(), loansEdit->value(),
+                        costEdit->value(), copiesEdit->value(), loansEdit->value(),
                         directorEdit->text().toStdString(), protagonistEdit->text().toStdString(), durationEdit->value());
     } else {
         return new Vinile(imagePathEdit->text().toStdString(), titleEdit->text().toStdString(), yearEdit->value(),
                         genreEdit->text().toStdString(), languageCombo->currentText().toStdString(), true, 
-                        COSTO_VINILE, copiesEdit->value(), loansEdit->value(),
+                        costEdit->value(), copiesEdit->value(), loansEdit->value(),
                         artistEdit->text().toStdString(), recordCompanyEdit->text().toStdString(), rpmCombo->currentText().toInt());
     }
 }
@@ -378,7 +380,7 @@ void EditCreatePage::cleanLayout() {
     languageCombo = nullptr;
     copiesEdit = nullptr;
     loansEdit = nullptr;
-    costLabel = nullptr;
+    costEdit = nullptr;
 
     authorEdit = nullptr;
     pagesEdit = nullptr;
