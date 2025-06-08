@@ -8,7 +8,6 @@
 
 MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWindow(parent), stack(stackedwidget)  {
     setWindowTitle("Accesso");
-    //setMinimumSize(1000, 800);
 
     stackedwidget->setStyleSheet("background-color: rgb(104, 193, 225);"); 
 
@@ -28,6 +27,7 @@ MainWindow::MainWindow(QStackedWidget *stackedwidget, QWidget *parent) : QMainWi
     exitButton->setStyleSheet("background-color: rgb(175, 238, 238); color:rgb(0, 0, 0); font-size: 18px; padding: 5px;");
     connect(exitButton, &QPushButton::clicked, this, &MainWindow::close);
 
+    
     topLayout->addWidget(exitButton);
 
     loginLayout->addLayout(topLayout);

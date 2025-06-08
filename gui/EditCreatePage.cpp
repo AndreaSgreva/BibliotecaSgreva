@@ -4,6 +4,8 @@
 #include <QDate>
 #include <QFileDialog>
 
+#include <QGraphicsDropShadowEffect>
+
 const QString EditCreatePage::fieldStyle = "background-color: rgb(175, 238, 238); color:rgb(0, 0, 0);";
 
 EditCreatePage::EditCreatePage(QStackedWidget* stackedWidget, QWidget* parent) 
@@ -171,6 +173,20 @@ void EditCreatePage::setupCommonFields() {
     costEdit->setStyleSheet(fieldStyle);
     copiesEdit->setStyleSheet(fieldStyle);
     loansEdit->setStyleSheet(fieldStyle);
+   
+    // Grafica speciale per imagePreview
+    imagePreview->setStyleSheet(R"(
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 5px;
+    )");
+
+    auto* shadow = new QGraphicsDropShadowEffect();
+    shadow->setBlurRadius(10);
+    shadow->setOffset(3, 3);
+    imagePreview->setGraphicsEffect(shadow);
+
 
     formLayout->addRow("Immagine:", imagePathEdit);
     formLayout->addWidget(browseImageButton);
@@ -369,7 +385,7 @@ void EditCreatePage::cleanLayout() {
         }
         delete item;  // Sicuro se non ha widget (Qt gestisce i widget con deleteLater)
     }
-
+    
     // Azzera i puntatori per evitare accessi a memoria invalidata
     imagePathEdit = nullptr;
     browseImageButton = nullptr;
